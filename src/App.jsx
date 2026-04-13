@@ -388,10 +388,7 @@ function RoadmapPage({ dark, T }) {
         <h1 style={{
           fontFamily: "'Fredoka One', cursive",
           fontSize: "clamp(36px, 6vw, 68px)", lineHeight: 1.1, marginBottom: 18,
-          background: dark
-            ? `linear-gradient(135deg, ${N.sky}, ${N.teal})`
-            : `linear-gradient(135deg, ${N.blue}, ${N.wiiu})`,
-          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+          color: dark ? N.sky : N.blue,
         }}>
           First Foreign CEO<br />of Nintendo of Japan
         </h1>
@@ -614,7 +611,7 @@ function ResourcesPage({ dark, T }) {
         <div style={{ display: "inline-flex", marginBottom: 18, padding: "6px 18px", background: dark ? "rgba(255,184,0,0.12)" : "rgba(255,184,0,0.1)", borderRadius: 99, border: "1.5px solid rgba(255,184,0,0.3)" }}>
           <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: 3, color: N.yellow, textTransform: "uppercase" }}>Resource Library</span>
         </div>
-        <h2 style={{ fontFamily: "'Fredoka One', cursive", fontSize: "clamp(28px,5vw,54px)", marginBottom: 14, lineHeight: 1.1, background: `linear-gradient(135deg, ${N.yellow}, ${N.orange})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+        <h2 style={{ fontFamily: "'Fredoka One', cursive", fontSize: "clamp(28px,5vw,54px)", marginBottom: 14, lineHeight: 1.1, color: N.orange }}>
           My Reading Roadmap
         </h2>
         <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: T.textSub, fontWeight: 600, lineHeight: 1.7, maxWidth: 440, margin: "0 auto 28px" }}>
@@ -759,10 +756,11 @@ export default function App() {
   }, [dark]);
 
   return (
-    <div style={{ fontFamily: "'Nunito', sans-serif", background: T.bg, minHeight: "100vh", color: T.text, position: "relative", overflow: "hidden" }}>
+    <div style={{ fontFamily: "'Nunito', sans-serif", background: T.bg, minHeight: "100vh", color: T.text, position: "relative" }}>
       <style>{`
         ${FONTS}
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { background: ${T.bg}; margin: 0; padding: 0; }
         @keyframes fadeSlide { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
         @keyframes floatDot { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
         button { font-family: inherit; outline: none; }
@@ -782,7 +780,7 @@ export default function App() {
       <nav style={{ position: "sticky", top: 0, zIndex: 100, background: T.navBg, backdropFilter: "blur(20px) saturate(1.6)", borderBottom: `2px solid ${T.border}`, padding: "0 20px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 58, boxShadow: T.shadow }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 34, height: 34, borderRadius: 12, background: `linear-gradient(135deg, ${N.red}, ${N.blue})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, boxShadow: "0 3px 12px rgba(0,0,0,0.25)" }}>🎮</div>
-          <span style={{ fontFamily: "'Fredoka One', cursive", fontSize: 20, background: `linear-gradient(135deg, ${N.red}, ${N.blue})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>NOJ Path</span>
+          <span style={{ fontFamily: "'Fredoka One', cursive", fontSize: 20, color: N.red }}>NOJ Path</span>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
