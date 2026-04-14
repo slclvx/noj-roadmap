@@ -3,8 +3,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 // ─────────────────────────────────────────────────────────────────────────────
 // CONFIG — paste your Supabase keys here
 // ─────────────────────────────────────────────────────────────────────────────
-const SB_URL  = "YOUR_SUPABASE_URL";
-const SB_ANON = "YOUR_SUPABASE_ANON_KEY";
+const SB_URL  = "https://zikzjouumufjndzeifnz.supabase.co";
+const SB_ANON = "sb_publishable_S0MqxHx-Njdkl194-4pDrQ_1MdRRRBC";
 const OWNER   = "sebastianosky"; // only this username gets edit controls
 
 // ─────────────────────────────────────────────────────────────────────────────
