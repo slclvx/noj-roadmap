@@ -370,21 +370,111 @@ function useLiveState(key, defaultVal, isOwner) {
     return()=>clearInterval(interval);
   },[isOwner,load]);
 
-  const save=useCallback(async(newState)=>{
+  const save=useCallback(async(newState,changeMsg="Progress updated")=>{
     setState(newState);
     setSyncing(true);
     await sb.set(key,newState);
     setUpdatedAt(new Date().toISOString());
+    // Broadcast to all visitors that something changed
+    if(isOwner){
+      await sb.set("last_change",{ts:Date.now().toString(),msg:changeMsg});
+    }
     setSyncing(false);
-  },[key]);
+  },[key,isOwner]);
 
   return {state,setState,save,updatedAt,syncing,reload:load};
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ROADMAP PAGE
+// GLOBAL UPDATE BANNER — polls for changes, shows reload prompt to visitors
 // ─────────────────────────────────────────────────────────────────────────────
-function RoadmapPage({dark,isOwner,showToast}) {
+function useUpdateBanner(isOwner) {
+  const [showBanner,setShowBanner]=useState(false);
+  const [bannerMsg,setBannerMsg]=useState("");
+  const lastSeenRef=useRef(null);
+
+  useEffect(()=>{
+    if(isOwner)return; // owner doesn't need the banner
+
+    // Check for updates every 10 seconds
+    const check=async()=>{
+      const data=await sb.get("last_change");
+      if(!data)return;
+      const ts=data.value?.ts;
+      const msg=data.value?.msg||"sebastianosky made a change";
+      if(!ts)return;
+      if(lastSeenRef.current===null){
+        // First load — just record the timestamp, don't show banner
+        lastSeenRef.current=ts;
+        return;
+      }
+      if(ts!==lastSeenRef.current){
+        lastSeenRef.current=ts;
+        setBannerMsg(msg);
+        setShowBanner(true);
+      }
+    };
+
+    check();
+    const interval=setInterval(check,10000);
+    return()=>clearInterval(interval);
+  },[isOwner]);
+
+  return {showBanner,bannerMsg,dismiss:()=>setShowBanner(false)};
+}
+
+// Banner component
+function UpdateBanner({msg,onReload,onDismiss,dark}) {
+  const t=T(dark);
+  return(
+    <div style={{position:"fixed",top:58,left:0,right:0,zIndex:300,padding:"0 16px",pointerEvents:"none",animation:"slideDown 0.4s cubic-bezier(0.34,1.2,0.64,1)"}}>
+      <div style={{maxWidth:600,margin:"8px auto 0",background:`linear-gradient(135deg,${C.blue},${C.purple})`,borderRadius:16,padding:"12px 18px",display:"flex",alignItems:"center",gap:12,boxShadow:`0 8px 32px ${C.blue}44`,pointerEvents:"all"}}>
+        <span style={{fontSize:20}}>🎮</span>
+        <div style={{flex:1}}>
+          <div style={{fontFamily:"'Fredoka One',cursive",fontSize:14,color:"#fff"}}>sebastianosky updated the roadmap!</div>
+          <div style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:"rgba(255,255,255,0.8)",fontWeight:600}}>{msg}</div>
+        </div>
+        <button onClick={onReload} style={{padding:"7px 14px",borderRadius:10,border:"none",cursor:"pointer",background:"rgba(255,255,255,0.25)",color:"#fff",fontFamily:"'Nunito',sans-serif",fontSize:12,fontWeight:800,backdropFilter:"blur(8px)"}}>↻ Refresh</button>
+        <button onClick={onDismiss} style={{background:"none",border:"none",cursor:"pointer",color:"rgba(255,255,255,0.7)",fontSize:18,padding:"0 4px",lineHeight:1}}>✕</button>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONFETTI — fires when a phase or quest is completed
+// ─────────────────────────────────────────────────────────────────────────────
+function Confetti({active,onDone}) {
+  const [particles,setParticles]=useState([]);
+  const colors=[C.red,C.orange,C.yellow,C.green,C.teal,C.blue,C.purple,C.pink];
+
+  useEffect(()=>{
+    if(!active)return;
+    const p=Array.from({length:40},(_,i)=>({
+      id:i,
+      x:40+Math.random()*20,
+      color:colors[i%colors.length],
+      size:6+Math.random()*8,
+      dx:(Math.random()-0.5)*200,
+      dy:-(80+Math.random()*120),
+      rot:Math.random()*360,
+    }));
+    setParticles(p);
+    const t=setTimeout(()=>{setParticles([]);onDone&&onDone();},1200);
+    return()=>clearTimeout(t);
+  },[active]);
+
+  if(!particles.length)return null;
+  return(
+    <div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:1000,overflow:"hidden"}}>
+      {particles.map(p=>(
+        <div key={p.id} style={{position:"absolute",left:`${p.x}%`,bottom:"20%",width:p.size,height:p.size,borderRadius:p.id%3===0?"50%":3,background:p.color,animation:`confettiPop 1.1s ease forwards`,animationDelay:`${p.id*0.015}s`,transform:`translateX(${p.dx}px) translateY(${p.dy}px) rotate(${p.rot}deg)`}}/>
+      ))}
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
   const t=T(dark);
   const [open,setOpen]=useState(1);
   const [tab,setTab]=useState("milestones");
@@ -412,7 +502,13 @@ function RoadmapPage({dark,isOwner,showToast}) {
     if(!isOwner)return;
     const key=`${phaseId}-${mIdx}`;
     const next={...checks,[key]:!checks[key]};
-    saveChecks(next);
+    saveChecks(next,"Milestone checked off");
+    // Fire confetti if this completes the phase
+    const phase=PHASES.find(p=>p.id===phaseId);
+    if(phase){
+      const nowDone=phase.milestones.filter((_,i)=>next[`${phaseId}-${i}`]).length;
+      if(nowDone===phase.milestones.length)fireConfetti();
+    }
   };
 
   return(
@@ -559,17 +655,22 @@ function RoadmapPage({dark,isOwner,showToast}) {
 // ─────────────────────────────────────────────────────────────────────────────
 // RESOURCES PAGE
 // ─────────────────────────────────────────────────────────────────────────────
-function ResourcesPage({dark,isOwner,showToast}) {
+function ResourcesPage({dark,isOwner,showToast,fireConfetti}) {
   const t=T(dark);
   const [openPhase,setOpenPhase]=useState(null);
   const [filter,setFilter]=useState("All");
   const {state:read,save:saveRead,updatedAt,syncing} = useLiveState("book_reads",{},isOwner);
 
-  const toggleRead=(num,e)=>{
+  const toggleRead=(num,e,phase)=>{
     e.stopPropagation();if(!isOwner)return;
     const next={...read,[num]:!read[num]};
-    saveRead(next);
+    saveRead(next,"Book marked as read");
     showToast(next[num]?"Marked as read ✓":"Unmarked","success");
+    // Confetti if entire phase is now read
+    if(phase){
+      const allRead=phase.books.every(b=>b.num===num?next[num]:next[b.num]);
+      if(allRead)fireConfetti();
+    }
   };
 
   const allTypes=["All","🎯 Core","🧠 Mindset","🇯🇵 Japanese","🇯🇵 Culture","💻 Tech","🎮 Design","👑 Leadership"];
@@ -633,7 +734,7 @@ function ResourcesPage({dark,isOwner,showToast}) {
                     const done=!!read[book.num];
                     return(
                       <div key={book.num} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"14px 0",borderBottom:i<phase.books.length-1?`1.5px solid ${t.border}`:"none",opacity:done?0.5:1,transition:"opacity 0.2s"}}>
-                        <Check done={done} accent={phase.accent} disabled={!isOwner} onClick={e=>toggleRead(book.num,e)}/>
+                        <Check done={done} accent={phase.accent} disabled={!isOwner} onClick={e=>toggleRead(book.num,e,phase)}/>
                         <div style={{fontFamily:"'Fredoka One',cursive",fontSize:13,color:phase.accent,minWidth:30,padding:"3px 7px",borderRadius:9,textAlign:"center",background:dark?`${phase.accent}16`:`${phase.accent}10`,border:`2px solid ${phase.accent}44`,flexShrink:0}}>{String(book.num).padStart(2,"0")}</div>
                         <div style={{flex:1}}>
                           <div style={{display:"flex",alignItems:"center",flexWrap:"wrap",gap:7,marginBottom:4}}>
@@ -660,7 +761,7 @@ function ResourcesPage({dark,isOwner,showToast}) {
 // ─────────────────────────────────────────────────────────────────────────────
 // SIDE QUESTS PAGE
 // ─────────────────────────────────────────────────────────────────────────────
-function SideQuestsPage({dark,isOwner,showToast}) {
+function SideQuestsPage({dark,isOwner,showToast,fireConfetti}) {
   const t=T(dark);
   const [open,setOpen]=useState(null);
   const [filter,setFilter]=useState("All");
@@ -674,15 +775,24 @@ function SideQuestsPage({dark,isOwner,showToast}) {
     e.stopPropagation();if(!isOwner)return;
     const cur=questStatuses[id]||DEFAULT_QUESTS.find(q=>q.id===id).status;
     const idx=QUEST_STATUSES.indexOf(cur);
-    const next={...questStatuses,[id]:QUEST_STATUSES[(idx+1)%QUEST_STATUSES.length]};
-    saveStatuses(next);showToast("Quest updated ✓","success");
+    const nextStatus=QUEST_STATUSES[(idx+1)%QUEST_STATUSES.length];
+    const next={...questStatuses,[id]:nextStatus};
+    saveStatuses(next,"Quest status updated");
+    showToast("Quest updated ✓","success");
+    if(nextStatus==="Complete")fireConfetti();
   };
 
   const toggleCheck=(questId,mIdx)=>{
     if(!isOwner)return;
     const key=`${questId}-${mIdx}`;
     const next={...questChecks,[key]:!questChecks[key]};
-    saveQuestChecks(next);
+    saveQuestChecks(next,"Quest milestone checked");
+    // Confetti if all milestones done
+    const quest=DEFAULT_QUESTS.find(q=>q.id===questId);
+    if(quest){
+      const allDone=quest.milestones.every((_,i)=>next[`${questId}-${i}`]);
+      if(allDone)fireConfetti();
+    }
   };
 
   const categories=["All","Life","Japanese","Tech","Leadership","Japan"];
@@ -778,18 +888,37 @@ export default function App() {
   const [showTop,setShowTop]=useState(false);
   const [isOwner,setIsOwner]=useState(()=>LS.get("noj_owner",false));
   const [showPin,setShowPin]=useState(false);
+  const [confetti,setConfetti]=useState(false);
   const {toasts,show:showToast}=useToast();
+  const {showBanner,bannerMsg,dismiss:dismissBanner}=useUpdateBanner(isOwner);
   const t=T(dark);
 
   useEffect(()=>LS.set("noj_theme",dark),[dark]);
+
+  // Scroll to top listener
   useEffect(()=>{
     const onScroll=()=>setShowTop(window.scrollY>400);
     window.addEventListener("scroll",onScroll,{passive:true});
     return()=>window.removeEventListener("scroll",onScroll);
   },[]);
 
+  // Keyboard shortcuts
+  useEffect(()=>{
+    const onKey=(e)=>{
+      if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA")return;
+      if(e.key==="r"||e.key==="R")navigate("roadmap");
+      if(e.key==="b"||e.key==="B")navigate("resources");
+      if(e.key==="q"||e.key==="Q")navigate("quests");
+      if(e.key==="d"||e.key==="D")setDark(v=>!v);
+      if(e.key==="ArrowUp"&&window.scrollY>200)window.scrollTo({top:0,behavior:"smooth"});
+    };
+    window.addEventListener("keydown",onKey);
+    return()=>window.removeEventListener("keydown",onKey);
+  },[]);
+
   const navigate=(id)=>{setPage(id);setSidebar(false);window.scrollTo({top:0,behavior:"smooth"});};
   const lockOwner=()=>{setIsOwner(false);LS.set("noj_owner",false);showToast("Locked 🔒","info");setSidebar(false);};
+  const fireConfetti=()=>{setConfetti(true);};
 
   return(
     <div style={{fontFamily:"'Nunito',sans-serif",background:t.bg,minHeight:"100vh",color:t.text,position:"relative"}}>
@@ -801,7 +930,8 @@ export default function App() {
         @keyframes floatDot{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
         @keyframes popIn{from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
         @keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-        @keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+        @keyframes confettiPop{0%{opacity:1;transform:translateX(0) translateY(0) rotate(0deg);}100%{opacity:0;transform:translateX(var(--dx,80px)) translateY(var(--dy,-100px)) rotate(360deg);}}
+        @keyframes slideDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
         button{font-family:inherit;outline:none;-webkit-tap-highlight-color:transparent;}
         input,textarea{outline:none;font-family:inherit;}
         ::-webkit-scrollbar{width:5px;height:5px;}
@@ -827,6 +957,12 @@ export default function App() {
       {/* PIN modal */}
       {showPin&&<PinModal dark={dark} onClose={()=>setShowPin(false)} onSuccess={()=>{setIsOwner(true);setShowPin(false);showToast("Owner mode unlocked 👑","success");}}/>}
 
+      {/* Confetti */}
+      <Confetti active={confetti} onDone={()=>setConfetti(false)}/>
+
+      {/* Global update banner for visitors */}
+      {showBanner&&<UpdateBanner msg={bannerMsg} dark={dark} onReload={()=>window.location.reload()} onDismiss={dismissBanner}/>}
+
       {/* Toast notifications */}
       <Toast toasts={toasts}/>
 
@@ -845,9 +981,12 @@ export default function App() {
         <div style={{flex:1,padding:"14px 12px",display:"flex",flexDirection:"column",gap:4}}>
           {NAV_TABS.map(tab=>{
             const active=page===tab.id;
+            const shortcuts={"roadmap":"R","resources":"B","quests":"Q"};
             return(
               <button key={tab.id} onClick={()=>navigate(tab.id)} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 16px",borderRadius:16,border:"none",cursor:"pointer",background:active?`linear-gradient(135deg,${C.blue},${C.sky})`:t.pill,color:active?"#fff":t.sub,fontFamily:"'Nunito',sans-serif",fontSize:14,fontWeight:800,textAlign:"left",transition:"all 0.2s",boxShadow:active?`0 4px 16px ${C.blue}44`:"none"}}>
-                <span style={{fontSize:20}}>{tab.emoji}</span>{tab.label}
+                <span style={{fontSize:20}}>{tab.emoji}</span>
+                <span style={{flex:1}}>{tab.label}</span>
+                <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,opacity:0.4,fontWeight:400}}>{shortcuts[tab.id]}</span>
               </button>
             );
           })}
@@ -897,9 +1036,9 @@ export default function App() {
 
       {/* Page */}
       <div className="noj-page-wrap" key={page} style={{position:"relative",zIndex:1,animation:"fadeSlide 0.3s ease"}}>
-        {page==="roadmap"   &&<RoadmapPage    dark={dark} isOwner={isOwner} showToast={showToast}/>}
-        {page==="resources" &&<ResourcesPage  dark={dark} isOwner={isOwner} showToast={showToast}/>}
-        {page==="quests"    &&<SideQuestsPage dark={dark} isOwner={isOwner} showToast={showToast}/>}
+        {page==="roadmap"   &&<RoadmapPage    dark={dark} isOwner={isOwner} showToast={showToast} fireConfetti={fireConfetti}/>}
+        {page==="resources" &&<ResourcesPage  dark={dark} isOwner={isOwner} showToast={showToast} fireConfetti={fireConfetti}/>}
+        {page==="quests"    &&<SideQuestsPage dark={dark} isOwner={isOwner} showToast={showToast} fireConfetti={fireConfetti}/>}
       </div>
 
       {/* Scroll to top */}
