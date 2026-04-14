@@ -3,8 +3,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 // ─────────────────────────────────────────────────────────────────────────────
 // CONFIG — paste your Supabase keys here
 // ─────────────────────────────────────────────────────────────────────────────
-const SB_URL  = "https://zikzjouumufjndzeifnz.supabase.co";
-const SB_ANON = "sb_publishable_S0MqxHx-Njdkl194-4pDrQ_1MdRRRBC";
+const SB_URL  = "YOUR_SUPABASE_URL";
+const SB_ANON = "YOUR_SUPABASE_ANON_KEY";
 const OWNER   = "sebastianosky"; // only this username gets edit controls
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -250,8 +250,7 @@ function AuthModal({onClose,onAuth,dark}) {
       // insert profile
       await sb.fetch("profiles",{method:"POST",body:JSON.stringify({id:data.user.id,username:username.trim().toLowerCase(),email:email.trim(),join_date:new Date().toISOString()})},data.access_token);
       // Auto log in but flag as unconfirmed
-      onAuth({...data.user,access_token:data.access_token,username:username.trim().toLowerCase(),email_confirmed:false});
-      setMsg("Account created! Check your email to confirm — DMs and friend requests unlock after confirmation.");
+      onAuth({...data.user,access_token:data.access_token,username:username.trim().toLowerCase()});
     } else {
       const data=await sb.auth("token?grant_type=password",{email:email.trim(),password});
       if(data.error){setErr("Wrong email or password.");setLoading(false);return;}
@@ -286,7 +285,7 @@ function AuthModal({onClose,onAuth,dark}) {
           <button onClick={submit} disabled={loading} style={{padding:"13px",borderRadius:14,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${C.blue},${C.sky})`,color:"#fff",fontFamily:"'Fredoka One',cursive",fontSize:18,boxShadow:`0 4px 18px ${C.blue}44`,opacity:loading?0.7:1,transition:"opacity 0.2s"}}>
             {loading?"...":(mode==="login"?"Log In →":"Create Account →")}
           </button>
-          {mode==="signup"&&<div style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:t.mute,textAlign:"center",fontWeight:600}}>After signing up, check your email to unlock DMs and friends.</div>}
+
         </div>
       </ICard>
     </div>
@@ -550,15 +549,7 @@ function ProfilePage({username,user,dark,onBack,onUpdateUser}) {
             </div>
           </ICard>
 
-          {/* Email confirmation status */}
-          <ICard dark={dark} noHover style={{padding:24}}>
-            <div style={{fontFamily:"'Fredoka One',cursive",fontSize:18,color:t.text,marginBottom:10}}>📧 Email</div>
-            <div style={{fontFamily:"'Nunito',sans-serif",fontSize:13,color:t.sub,fontWeight:600,marginBottom:8}}>{user.email}</div>
-            {user.email_confirmed
-              ?<div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,color:C.green,fontWeight:800,padding:"6px 12px",background:"rgba(61,214,140,0.1)",borderRadius:99,display:"inline-block"}}>✓ Email confirmed — all features unlocked</div>
-              :<div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,color:C.orange,fontWeight:800,padding:"6px 12px",background:"rgba(255,140,66,0.1)",borderRadius:99,display:"inline-block"}}>⚠ Email not confirmed — check your inbox to unlock DMs and friends</div>
-            }
-          </ICard>
+
 
           {/* Delete account */}
           <ICard dark={dark} noHover style={{padding:24,border:`2px solid rgba(255,92,117,0.3)`}}>
@@ -844,7 +835,7 @@ export default function App() {
   const navigate=(id)=>{setPage(id);setProfileUser(null);setSidebar(false);};
   const openProfile=(username)=>{setProfileUser(username);setSidebar(false);};
 
-  const emailConfirmed=user?.email_confirmed||user?.email_confirmed_at!=null;
+
 
   return(
     <div style={{fontFamily:"'Nunito',sans-serif",background:T.bg,minHeight:"100vh",color:T.text,position:"relative"}}>
@@ -893,10 +884,10 @@ export default function App() {
 
           <div style={{margin:"8px 0",height:1,background:T.border}}/>
 
-          {/* DMs — requires email confirmed */}
+          {/* DMs */}
           {user&&(
-            <button onClick={()=>{if(!emailConfirmed){alert("Please confirm your email to use DMs.");return;}setShowDMs(true);setSidebar(false);}} style={{display:"flex",alignItems:"center",gap:12,padding:"11px 14px",borderRadius:14,border:"none",cursor:"pointer",background:T.pill,color:emailConfirmed?T.sub:T.mute,fontFamily:"'Nunito',sans-serif",fontSize:14,fontWeight:800,textAlign:"left",opacity:emailConfirmed?1:0.5}}>
-              <span style={{fontSize:18}}>💬</span> Messages {!emailConfirmed&&<span style={{fontSize:10,color:C.orange}}>⚠ confirm email</span>}
+            <button onClick={()=>{setShowDMs(true);setSidebar(false);}} style={{display:"flex",alignItems:"center",gap:12,padding:"11px 14px",borderRadius:14,border:"none",cursor:"pointer",background:T.pill,color:T.sub,fontFamily:"'Nunito',sans-serif",fontSize:14,fontWeight:800,textAlign:"left"}}>
+              <span style={{fontSize:18}}>💬</span> Messages
             </button>
           )}
         </div>
@@ -909,7 +900,6 @@ export default function App() {
                 <Avatar username={user.username} size={34} dark={dark}/>
                 <div>
                   <div style={{fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:800,color:isOwner?C.yellow:T.text}}>{isOwner?"👑 ":""}{user.username}</div>
-                  {!emailConfirmed&&<div style={{fontFamily:"'Nunito',sans-serif",fontSize:10,color:C.orange,fontWeight:700}}>Email unconfirmed</div>}
                 </div>
               </button>
               <button onClick={handleLogout} style={{width:"100%",padding:"8px",borderRadius:12,border:`1.5px solid ${T.border}`,background:"transparent",color:T.mute,cursor:"pointer",fontFamily:"'Nunito',sans-serif",fontSize:12,fontWeight:800}}>Log out</button>
