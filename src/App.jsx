@@ -180,8 +180,8 @@ const TYPE_META = {
 
 const STATUS_META = {
   "Not Started":{color:C.mute,bg:"rgba(150,160,200,0.12)"},
-  "In Progress":{color:C.green,bg:"rgba(61,214,140,0.12)"},
-  "Complete":{color:C.yellow,bg:"rgba(255,200,68,0.12)"},
+  "In Progress":{color:C.yellow,bg:"rgba(255,200,68,0.12)"},
+  "Complete":{color:C.green,bg:"rgba(61,214,140,0.12)"},
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
