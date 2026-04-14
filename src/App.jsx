@@ -662,8 +662,24 @@ function ResourcesPage({dark,isOwner}) {
   const[openPhase,setOpenPhase]=useState(null);
   const[filter,setFilter]=useState("All");
   const[read,setRead]=useState(()=>{try{return JSON.parse(localStorage.getItem(LS_BOOKS))||{};}catch{return{};}});
-  useEffect(()=>{try{localStorage.setItem(LS_BOOKS,JSON.stringify(read));}catch{}},[read]);
-  const toggleRead=(num,e)=>{if(!isOwner)return;e.stopPropagation();setRead(p=>({...p,[num]:!p[num]}));};
+
+  // Load live read state from Supabase on mount
+  useEffect(()=>{
+    sb.fetch("owner_state?key=eq.book_reads").then(data=>{
+      if(data?.[0]?.value){
+        const m=JSON.parse(data[0].value);
+        setRead(m);
+      }
+    });
+  },[]);
+
+  const saveRead=async(updated)=>{
+    try{localStorage.setItem(LS_BOOKS,JSON.stringify(updated));}catch{}
+    await sb.fetch("owner_state",{method:"POST",body:JSON.stringify({key:"book_reads",value:JSON.stringify(updated),updated_at:new Date().toISOString()}),headers:{"Prefer":"resolution=merge-duplicates"}});
+  };
+
+  useEffect(()=>{},[read]); // kept for compatibility
+  const toggleRead=(num,e)=>{if(!isOwner)return;e.stopPropagation();setRead(prev=>{const updated={...prev,[num]:!prev[num]};saveRead(updated);return updated;});};
   const allTypes=["All","🎯 Core","🧠 Mindset","🇯🇵 Japanese","🇯🇵 Culture","💻 Tech","🎮 Design","👑 Leadership"];
   const totalBooks=BOOK_PHASES.reduce((s,p)=>s+p.books.length,0);
   const newBooks=BOOK_PHASES.reduce((s,p)=>s+p.books.filter(b=>b.isNew).length,0);
@@ -746,7 +762,22 @@ function SideQuestsPage({dark,isOwner}) {
     try{const s=JSON.parse(localStorage.getItem(LS_QUESTS));if(s)return DEFAULT_QUESTS.map(q=>({...q,status:s[q.id]||q.status}));}catch{}
     return DEFAULT_QUESTS;
   });
-  const saveStatuses=(u)=>{const m={};u.forEach(q=>{m[q.id]=q.status;});try{localStorage.setItem(LS_QUESTS,JSON.stringify(m));}catch{}};
+
+  // Load live statuses from Supabase on mount
+  useEffect(()=>{
+    sb.fetch("owner_state?key=eq.quest_statuses").then(data=>{
+      if(data?.[0]?.value){
+        const m=JSON.parse(data[0].value);
+        setQuests(DEFAULT_QUESTS.map(q=>({...q,status:m[q.id]||q.status})));
+      }
+    });
+  },[]);
+  const saveStatuses=async(u)=>{
+    const m={};u.forEach(q=>{m[q.id]=q.status;});
+    try{localStorage.setItem(LS_QUESTS,JSON.stringify(m));}catch{}
+    // Sync to Supabase so all viewers see live changes
+    await sb.fetch("owner_state",{method:"POST",body:JSON.stringify({key:"quest_statuses",value:JSON.stringify(m),updated_at:new Date().toISOString()}),headers:{"Prefer":"resolution=merge-duplicates"}});
+  };
   const cycleStatus=(e,id)=>{e.stopPropagation();if(!isOwner)return;setQuests(prev=>{const u=prev.map(q=>{if(q.id!==id)return q;const idx=QUEST_STATUSES.indexOf(q.status);return{...q,status:QUEST_STATUSES[(idx+1)%QUEST_STATUSES.length]};});saveStatuses(u);return u;});};
   const categories=["All","Life","Japanese","Tech","Leadership","Japan"];
   const filtered=quests.filter(q=>filter==="All"||q.category===filter);
@@ -758,8 +789,8 @@ function SideQuestsPage({dark,isOwner}) {
         <p style={{fontFamily:"'Nunito',sans-serif",fontSize:14,color:t.sub,fontWeight:600,lineHeight:1.7,maxWidth:420,margin:"0 auto 24px"}}>The goals that live between the phases. Not optional — just parallel.</p>
         <div style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap"}}>
           <StatCard value={quests.length} label="Quests" color={C.red} dark={dark}/>
-          <StatCard value={quests.filter(q=>q.status==="In Progress").length} label="Active" color={C.green} dark={dark}/>
-          <StatCard value={quests.filter(q=>q.status==="Complete").length} label="Done" color={C.yellow} dark={dark}/>
+          <StatCard value={quests.filter(q=>q.status==="In Progress").length} label="Active" color={C.yellow} dark={dark}/>
+          <StatCard value={quests.filter(q=>q.status==="Complete").length} label="Done" color={C.green} dark={dark}/>
         </div>
         {isOwner&&<div style={{marginTop:14,fontFamily:"'Nunito',sans-serif",fontSize:12,color:t.mute,fontWeight:700}}>✏️ Click a status badge to update it</div>}
       </div>
@@ -817,7 +848,7 @@ const NAV_TABS=[
 export default function App() {
   const[page,      setPage]     =useState("roadmap");
   const[dark,      setDark]     =useState(()=>{try{return localStorage.getItem("noj_theme")==="dark";}catch{return false;}});
-  const[user,      setUser]     =useState(null);
+  const[user,      setUser]     =useState(()=>{try{const s=localStorage.getItem("noj_session");return s?JSON.parse(s):null;}catch{return null;}});
   const[showAuth,  setShowAuth] =useState(false);
   const[showDMs,   setShowDMs]  =useState(false);
   const[sidebarOpen,setSidebar] =useState(false);
@@ -828,9 +859,21 @@ export default function App() {
 
   useEffect(()=>{try{localStorage.setItem("noj_theme",dark?"dark":"light");}catch{}},[dark]);
 
-  const handleAuth=(data)=>{setUser(data);setShowAuth(false);};
-  const handleLogout=async()=>{if(user)await sb.logout(user.access_token);setUser(null);setSidebar(false);};
-  const handleUpdateUser=(updated)=>setUser(updated);
+  const handleAuth=(data)=>{
+    setUser(data);
+    setShowAuth(false);
+    try{localStorage.setItem("noj_session",JSON.stringify(data));}catch{}
+  };
+  const handleLogout=async()=>{
+    if(user)await sb.logout(user.access_token);
+    setUser(null);
+    setSidebar(false);
+    try{localStorage.removeItem("noj_session");}catch{}
+  };
+  const handleUpdateUser=(updated)=>{
+    setUser(updated);
+    try{localStorage.setItem("noj_session",JSON.stringify(updated));}catch{}
+  };
 
   const navigate=(id)=>{setPage(id);setProfileUser(null);setSidebar(false);};
   const openProfile=(username)=>{setProfileUser(username);setSidebar(false);};
