@@ -76,22 +76,24 @@ function T(dark) {
 // DATA
 // ─────────────────────────────────────────────────────────────────────────────
 const PHASES = [
-  {id:1,num:"01",emoji:"🌱",label:"PHASE 1",title:"ROOTS",age:"14–15",where:"Las Vegas → ATECH",
+  {id:1,num:"01",emoji:"🌱",label:"PHASE 1",title:"ROOTS",age:"14–15",where:"Las Vegas → ATECH High School",
    tagline:"Become someone worth following before anyone is watching.",accent:C.green,
-   summary:"This is my foundation year. Nothing flashy happens here — but everything depends on it. I'm building the internal architecture that the rest of my life runs on.",
-   milestones:["Get into ATECH and lock in Advanced Computer Science","Start Genki I and do it every single day — no gaps","Write my first real program — not a tutorial, something I thought of","Read Ask Iwata cover to cover. Then read it again.","Build one habit system and keep it for 6 months straight"],
-   actions:["Study Japanese 30 min daily minimum — immersion counts (anime, games in JP)","Start a coding journal: what I built, what broke, what I learned","Follow Nintendo news actively — understand the business, not just the games","Find one person smarter than me in CS and learn from them"],
+   summary:"This is my foundation year at ATECH (Advanced Technologies Academy), a public magnet high school in Las Vegas focused on technology and engineering. Nothing flashy happens here — but everything depends on it. I'm building the internal architecture that the rest of my life runs on.",
+   milestones:["Get accepted into ATECH and lock in the Advanced Computer Science pathway","Start Genki I Japanese and do it every single day — no gaps","Write my first real program — not a tutorial, something I thought of","Read Ask Iwata cover to cover. Then read it again.","Build one habit system and keep it for 6 months straight","Enroll in and pass AP Computer Science Principles","Start a GitHub account and push my first project"],
+   actions:["Study Japanese 30 min daily minimum — immersion counts (anime, games in JP)","Start a coding journal: what I built, what broke, what I learned","Follow Nintendo news actively — understand the business, not just the games","Find one person smarter than me in CS and learn from them","Join any coding club or extracurricular at ATECH","Research what Stanford CS looks for in applicants — start building toward it now"],
    build_toward:"Consistency. The ability to show up when it's boring. This phase has no audience — that's the point.",
    iwata_note:"Iwata taught himself to program at 12 on a calculator. He didn't wait for school to give him permission.",
-   honest:"Most people with big goals fail here — not from lack of talent, but lack of follow-through on small things. I won't be most people."},
-  {id:2,num:"02",emoji:"⚙️",label:"PHASE 2",title:"CONSTRUCTION",age:"15–17",where:"ATECH — Deep",
+   honest:"Most people with big goals fail here — not from lack of talent, but lack of follow-through on small things. I won't be most people.",
+   school:{name:"ATECH — Advanced Technologies Academy",type:"Public Magnet High School",location:"Las Vegas, NV",focus:"Technology, Engineering & Computer Science",ap:["AP Computer Science Principles","AP Computer Science A","AP Calculus AB"],note:"One of Nevada's top STEM high schools. Acceptance is competitive. The AP CS track is my foundation before Stanford."}},
+  {id:2,num:"02",emoji:"⚙️",label:"PHASE 2",title:"CONSTRUCTION",age:"15–17",where:"ATECH High School — Deep",
    tagline:"Build things. Break things. Understand things.",accent:C.sky,
-   summary:"ATECH is my first real arena. This is where I stop being someone who wants to code and become someone who does. I'm stacking reps — Japanese, programming, creative thinking.",
-   milestones:["Complete Genki II — no shortcuts, no skipping grammar","Build at least 3 real projects and put them on GitHub","Take on a leadership role at school — club, group, anything","Read deeply into Nintendo's history and internal culture","Get my first programming win that genuinely impresses someone"],
-   actions:["Start consuming Japanese media without subtitles — even 10 min/day","Enter at least one CS competition or hackathon","Study Iwata's GDC talks and Nintendo Directs — analyze his communication style","Read Game Over like a business case study, not entertainment","Begin understanding what 'fun' means as a design philosophy, not just a feeling"],
-   build_toward:"A portfolio of real work. The beginning of a reputation, even locally. Proof I can lead something small.",
+   summary:"ATECH is my first real arena. This is where I stop being someone who wants to code and become someone who does. I'm stacking reps — Japanese, AP classes, programming projects, and creative thinking. Every AP I take here is a brick in the Stanford application.",
+   milestones:["Complete Genki II — no shortcuts, no skipping grammar","Build at least 3 real projects and put them on GitHub","Take on a leadership role at ATECH — club, group, anything","Read deeply into Nintendo's history and internal culture","Get my first programming win that genuinely impresses someone","Pass AP Computer Science A with a 5","Pass AP Calculus AB","Start preparing for AP Japanese Language if offered"],
+   actions:["Start consuming Japanese media without subtitles — even 10 min/day","Enter at least one CS competition or hackathon (Nevada FBLA, ACSL, or similar)","Study Iwata's GDC talks and Nintendo Directs — analyze his communication style","Read Game Over like a business case study, not entertainment","Begin understanding what 'fun' means as a design philosophy, not just a feeling","Maintain a 4.0+ GPA — ATECH's workload is real, don't slip","Build relationships with teachers who can write strong Stanford rec letters"],
+   build_toward:"A portfolio of real work. Strong AP scores. The beginning of a reputation, even locally. Proof I can lead something small.",
    iwata_note:"At HAL, Iwata was the person people went to when something was impossible. Not because he had the title — because he had the results.",
-   honest:"ATECH is my springboard to Stanford, but only if I treat it that way. I do more than is required. Always."},
+   honest:"ATECH is my springboard to Stanford, but only if I treat it that way. I do more than is required. Always.",
+   school:{name:"ATECH — Advanced Technologies Academy",type:"Public Magnet High School",location:"Las Vegas, NV",focus:"Technology, Engineering & Computer Science",ap:["AP Computer Science A","AP Calculus AB","AP Statistics","AP Physics","AP English Language","AP Japanese Language & Culture (if available)"],note:"Junior and senior years at ATECH are where the Stanford application is really built. AP scores, projects, leadership, and research matter here."}},
   {id:3,num:"03",emoji:"🎓",label:"PHASE 3",title:"STANFORD",age:"18–22",where:"Stanford University",
    tagline:"CS undergrad → CS + MBA joint degree. Four years that reshape how I think.",accent:C.red,
    summary:"Stanford is not just a degree — it's a network, a credibility marker, and a place where I'll meet the people who shape the industry I want to lead.",
@@ -183,7 +185,11 @@ const BOOK_PHASES = [
 
 const QUEST_STATUSES = ["Not Started","In Progress","Complete"];
 const DEFAULT_QUESTS = [
-  {id:"sq1",emoji:"💍",title:"Marry Ariana",category:"Life",color:C.pink,description:"My most important side quest. Two months in as of April 2026 — aiming for early 20s. She deserves a proposal as thoughtful as everything else on this list.",status:"In Progress",startDate:"February 2026",targetDate:"Early 20s",milestones:["2 months together ✓","Keep showing up every day","Build a life worth sharing","Ask the question"]},
+  {id:"sq1",emoji:"💍",title:"Marry Ariana",category:"Life",color:C.pink,
+   description:"My most important side quest. Started February 2026 — aiming for early 20s. She deserves a proposal as thoughtful as everything else on this list.",
+   status:"In Progress",startDate:"2026-02-13",targetDate:"Early 20s",
+   liveCounter:true,
+   milestones:["Keep showing up every single day","Build a life worth sharing","Plan something unforgettable","Ask the question"]},
   {id:"sq2",emoji:"🇯🇵",title:"Pass JLPT N1",category:"Japanese",color:C.teal,description:"The highest level of the Japanese Language Proficiency Test. Non-negotiable before I'm a serious NOJ candidate.",status:"Not Started",targetDate:"Before age 22",milestones:["Pass N5","Pass N4","Pass N3","Pass N2","Pass N1"]},
   {id:"sq3",emoji:"🎮",title:"Ship a Real Game",category:"Tech",color:C.purple,description:"Iwata shipped games. I need to ship a game. Doesn't have to be big — has to be real.",status:"Not Started",targetDate:"Before age 18",milestones:["Learn a game engine (Unity or Godot)","Build a prototype","Get 10 people to playtest","Ship it publicly"]},
   {id:"sq4",emoji:"🏆",title:"Win a Hackathon",category:"Tech",color:C.blue,description:"Not just participate — win. The competitive pressure of a hackathon is unlike anything else.",status:"Not Started",targetDate:"Before age 17",milestones:["Enter first hackathon","Build something in 24 hours","Place in top 3","Win one"]},
@@ -345,6 +351,63 @@ function LastUpdated({ts,dark}){
   const d=new Date(ts);
   const fmt=d.toLocaleDateString("en-US",{month:"short",day:"numeric"})+" at "+d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});
   return <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:1}}>Updated {fmt}</span>;
+}
+
+// Live relationship counter — counts up from start date
+function RelationshipCounter({startDate,color}) {
+  const [elapsed,setElapsed]=useState("");
+
+  useEffect(()=>{
+    const update=()=>{
+      const start=new Date(startDate);
+      const now=new Date();
+      const diff=now-start;
+      const days=Math.floor(diff/(1000*60*60*24));
+      const months=Math.floor(days/30);
+      const weeks=Math.floor((days%30)/7);
+      const remainingDays=days%7;
+      let str="";
+      if(months>0)str+=`${months} month${months!==1?"s":""}, `;
+      if(weeks>0)str+=`${weeks} week${weeks!==1?"s":""}, `;
+      str+=`${remainingDays} day${remainingDays!==1?"s":""}`;
+      setElapsed(str);
+    };
+    update();
+    const interval=setInterval(update,60000);
+    return()=>clearInterval(interval);
+  },[startDate]);
+
+  return(
+    <div style={{marginTop:14,padding:"14px 18px",borderRadius:16,background:`${color}12`,border:`2px solid ${color}44`,textAlign:"center"}}>
+      <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:`${color}99`,letterSpacing:3,textTransform:"uppercase",marginBottom:6}}>💍 Together</div>
+      <div style={{fontFamily:"'Fredoka One',cursive",fontSize:22,color,lineHeight:1.2}}>{elapsed}</div>
+      <div style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:`${color}88`,fontWeight:700,marginTop:4}}>and counting ✨</div>
+    </div>
+  );
+}
+
+// School info card shown in phase details
+function SchoolInfoCard({school,dark}) {
+  const t=T(dark);
+  if(!school)return null;
+  return(
+    <div style={{marginTop:14,padding:"16px 18px",borderRadius:16,background:dark?"rgba(59,140,255,0.08)":"rgba(59,140,255,0.06)",border:`2px solid ${C.blue}33`}}>
+      <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:C.blue,letterSpacing:2,textTransform:"uppercase",marginBottom:10,fontWeight:700}}>🏫 School Info</div>
+      <div style={{fontFamily:"'Fredoka One',cursive",fontSize:15,color:t.text,marginBottom:4}}>{school.name}</div>
+      <div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,color:t.sub,fontWeight:700,marginBottom:8}}>{school.location} · {school.focus}</div>
+      {school.ap&&school.ap.length>0&&(
+        <div>
+          <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:1,textTransform:"uppercase",marginBottom:6}}>AP Classes</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+            {school.ap.map(ap=>(
+              <span key={ap} style={{fontFamily:"'Nunito',sans-serif",fontSize:11,fontWeight:700,padding:"2px 10px",borderRadius:99,background:`${C.blue}14`,border:`1.5px solid ${C.blue}33`,color:C.blue}}>{ap}</span>
+            ))}
+          </div>
+        </div>
+      )}
+      {school.note&&<div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,color:t.sub,fontWeight:600,fontStyle:"italic",marginTop:10,lineHeight:1.6}}>{school.note}</div>}
+    </div>
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -615,6 +678,7 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
                         <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:2,color:phase.accent,textTransform:"uppercase",marginBottom:6,fontWeight:700}}>🔥 Building toward</div>
                         <div style={{fontFamily:"'Nunito',sans-serif",fontSize:13,color:t.sub,lineHeight:1.7,fontWeight:600,fontStyle:"italic"}}>{phase.build_toward}</div>
                       </div>
+                      <SchoolInfoCard school={phase.school} dark={dark}/>
                     </div>
                   )}
                   {tab==="actions"&&(
@@ -848,6 +912,7 @@ function SideQuestsPage({dark,isOwner,showToast,fireConfetti}) {
                   </div>
                 </div>
                 <p style={{fontFamily:"'Nunito',sans-serif",fontSize:13,color:t.sub,lineHeight:1.65,fontWeight:600,margin:"0 0 10px"}}>{quest.description}</p>
+                {quest.liveCounter&&quest.startDate&&<RelationshipCounter startDate={quest.startDate} color={quest.color}/>}
                 <ProgressBar value={qDone} total={quest.milestones.length} color={quest.color}/>
                 {isOpen&&(
                   <div style={{marginTop:16,paddingTop:16,borderTop:`1.5px solid ${t.border}`}}>
@@ -911,6 +976,15 @@ export default function App() {
       if(e.key==="q"||e.key==="Q")navigate("quests");
       if(e.key==="d"||e.key==="D")setDark(v=>!v);
       if(e.key==="ArrowUp"&&window.scrollY>200)window.scrollTo({top:0,behavior:"smooth"});
+      // 1-7 jumps to phase on roadmap page
+      const num=parseInt(e.key);
+      if(num>=1&&num<=7){
+        navigate("roadmap");
+        setTimeout(()=>{
+          const el=document.getElementById(`p${num}`);
+          if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-74,behavior:"smooth"});
+        },100);
+      }
     };
     window.addEventListener("keydown",onKey);
     return()=>window.removeEventListener("keydown",onKey);
@@ -940,12 +1014,24 @@ export default function App() {
         .noj-bottom-nav{display:none;}
         @media(max-width:640px){
           .noj-bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:200;background:${t.nav};backdrop-filter:blur(24px) saturate(1.8);border-top:2px solid ${t.border};height:64px;align-items:center;justify-content:space-around;padding:0 4px;box-shadow:0 -4px 24px rgba(0,0,0,0.12);}
-          .noj-page-wrap{padding-bottom:72px!important;}
-          .noj-hero{padding:30px 16px 24px!important;}
-          .noj-stat-cards{gap:8px!important;}
-          .noj-stat-card{padding:10px 14px!important;min-width:72px!important;}
-          .noj-quest-grid{grid-template-columns:1fr!important;}
-          .noj-timeline{padding:18px 16px 0!important;}
+          .noj-page-wrap{padding-bottom:76px!important;}
+          .noj-hero{padding:28px 16px 20px!important;}
+          .noj-stat-cards{gap:6px!important;}
+          .noj-stat-card{padding:9px 12px!important;min-width:64px!important;border-radius:14px!important;}
+          .noj-stat-card .val{font-size:22px!important;}
+          .noj-quest-grid{grid-template-columns:1fr!important;gap:12px!important;}
+          .noj-timeline{padding:14px 14px 0!important;}
+          .noj-filter{padding:12px 14px 4px!important;gap:6px!important;}
+          .phase-row{padding:13px 14px!important;gap:10px!important;}
+          .phase-num{font-size:20px!important;min-width:36px!important;}
+          .phase-title{font-size:15px!important;}
+          .phase-tag{display:none!important;}
+          .book-row{gap:8px!important;}
+          .book-num{min-width:26px!important;font-size:11px!important;}
+        }
+        @media(max-width:380px){
+          .noj-stat-card{padding:7px 8px!important;min-width:54px!important;}
+          .noj-stat-card .val{font-size:18px!important;}
         }
       `}</style>
 
@@ -1008,9 +1094,19 @@ export default function App() {
           )}
         </div>
         <div style={{padding:"16px 12px",borderTop:`1.5px solid ${t.border}`}}>
-          <button onClick={()=>setDark(d=>!d)} style={{width:"100%",display:"flex",alignItems:"center",gap:12,padding:"11px 16px",borderRadius:16,border:`1.5px solid ${t.border}`,background:"transparent",color:t.sub,cursor:"pointer",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:800}}>
+          <button onClick={()=>setDark(d=>!d)} style={{width:"100%",display:"flex",alignItems:"center",gap:12,padding:"11px 16px",borderRadius:16,border:`1.5px solid ${t.border}`,background:"transparent",color:t.sub,cursor:"pointer",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:800,marginBottom:10}}>
             {dark?"☀️ Light Mode":"🌙 Dark Mode"}
           </button>
+          {/* Keyboard shortcuts */}
+          <div style={{padding:"10px 12px",borderRadius:12,background:t.pill}}>
+            <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:2,textTransform:"uppercase",marginBottom:6}}>Shortcuts</div>
+            {[["R","Roadmap"],["B","Resources"],["Q","Side Quests"],["D","Dark/Light"],["1–7","Jump to Phase"],["↑","Scroll to top"]].map(([k,v])=>(
+              <div key={k} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"3px 0"}}>
+                <span style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:t.sub,fontWeight:600}}>{v}</span>
+                <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,color:t.mute,background:t.border,padding:"1px 7px",borderRadius:6}}>{k}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
