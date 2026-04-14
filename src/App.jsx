@@ -318,18 +318,18 @@ function RoadmapPage({dark}) {
   return (
     <div>
       {/* Hero */}
-      <div style={{padding:"52px 20px 44px",maxWidth:900,margin:"0 auto",textAlign:"center",borderBottom:`2px solid ${t.border}`}}>
+      <div className="noj-hero" style={{padding:"52px 20px 44px",maxWidth:900,margin:"0 auto",textAlign:"center",borderBottom:`2px solid ${t.border}`}}>
         <div style={{display:"inline-flex",marginBottom:18,padding:"6px 20px",background:`${C.blue}12`,borderRadius:99,border:`1.5px solid ${C.blue}28`}}>
           <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:3,color:C.blue,textTransform:"uppercase"}}>Personal Life Roadmap · The NOJ Path</span>
         </div>
-        <h1 style={{fontFamily:"'Fredoka One',cursive",fontSize:"clamp(30px,6vw,64px)",lineHeight:1.1,marginBottom:16,color:dark?C.sky:C.blue}}>
+        <h1 className="noj-title" style={{fontFamily:"'Fredoka One',cursive",fontSize:"clamp(30px,6vw,64px)",lineHeight:1.1,marginBottom:16,color:dark?C.sky:C.blue}}>
           First Foreign CEO<br/>of Nintendo of Japan
         </h1>
         <p style={{fontFamily:"'Nunito',sans-serif",fontSize:15,color:t.sub,fontWeight:600,lineHeight:1.8,maxWidth:460,margin:"0 auto 28px"}}>
           My roadmap to becoming the first foreign CEO of Nintendo.<br/>
           Inspired by Satoru Iwata. Built by sebastianosky.
         </p>
-        <div style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:24}}>
+        <div className="noj-stat-cards" style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:24}}>
           <StatCard value="7"   label="Phases" color={C.blue}   dark={dark}/>
           <StatCard value="~25" label="Years"  color={C.teal}   dark={dark}/>
           <StatCard value="1"   label="Goal"   color={C.yellow} dark={dark}/>
@@ -342,7 +342,7 @@ function RoadmapPage({dark}) {
       </div>
 
       {/* Timeline */}
-      <div style={{maxWidth:900,margin:"0 auto",padding:"24px 20px 0",overflowX:"auto"}}>
+      <div className="noj-timeline" style={{maxWidth:900,margin:"0 auto",padding:"24px 20px 0",overflowX:"auto"}}>
         <div style={{display:"flex",alignItems:"center",minWidth:520}}>
           {PHASES.map((p,i)=>(
             <div key={p.id} style={{display:"flex",alignItems:"center",flex:i<PHASES.length-1?1:0}}>
@@ -702,14 +702,40 @@ export default function App() {
         html,body{background:${t.bg};margin:0;padding:0;}
         @keyframes fadeSlide{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
         @keyframes floatDot{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
-        button{font-family:inherit;outline:none;}
+        @keyframes popIn{from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
+        button{font-family:inherit;outline:none;-webkit-tap-highlight-color:transparent;}
         input,textarea{outline:none;font-family:inherit;}
         ::-webkit-scrollbar{width:5px;height:5px;}
         ::-webkit-scrollbar-track{background:transparent;}
         ::-webkit-scrollbar-thumb{background:${dark?"#2a3060":"#c0c8f0"};border-radius:99px;}
+
+        /* ── Mobile bottom nav ── */
+        .noj-bottom-nav{display:none;}
+        @media(max-width:640px){
+          .noj-bottom-nav{
+            display:flex;position:fixed;bottom:0;left:0;right:0;z-index:200;
+            background:${t.nav};backdrop-filter:blur(24px) saturate(1.8);
+            border-top:2px solid ${t.border};height:64px;
+            align-items:center;justify-content:space-around;padding:0 4px;
+            box-shadow:0 -4px 24px rgba(0,0,0,0.12);
+          }
+          .noj-page-wrap{padding-bottom:72px;}
+          .noj-hero{padding:30px 16px 24px!important;}
+          .noj-stat-cards{gap:8px!important;}
+          .noj-stat-card{padding:10px 14px!important;min-width:72px!important;}
+          .noj-phase-btn{padding:13px 14px!important;gap:10px!important;}
+          .noj-phase-num{font-size:20px!important;min-width:36px!important;}
+          .noj-quest-grid{grid-template-columns:1fr!important;}
+          .noj-filter{padding:14px 16px 6px!important;}
+          .noj-timeline{padding:18px 16px 0!important;}
+          .noj-book-row{flex-direction:column;gap:8px!important;}
+          .noj-sidebar{width:240px!important;}
+          .noj-title{font-size:clamp(26px,8vw,52px)!important;}
+          .noj-h2{font-size:clamp(22px,7vw,40px)!important;}
+        }
       `}</style>
 
-      {/* Floating background dots */}
+      {/* Floating bg dots */}
       <div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0,overflow:"hidden"}}>
         {BG_DOTS.map((d,i)=>(
           <div key={i} style={{position:"absolute",left:`${d.x}%`,top:`${d.y}%`,width:d.size,height:d.size,borderRadius:"50%",background:d.color,opacity:dark?0.04:0.06,animation:`floatDot ${d.dur}s ease-in-out infinite`,animationDelay:`${d.delay}s`,filter:"blur(1px)"}}/>
@@ -717,29 +743,27 @@ export default function App() {
       </div>
 
       {/* Sidebar overlay */}
-      {sidebar&&<div onClick={()=>setSidebar(false)} style={{position:"fixed",inset:0,zIndex:150,background:"rgba(0,0,0,0.35)",backdropFilter:"blur(4px)"}}/>}
+      {sidebar&&<div onClick={()=>setSidebar(false)} style={{position:"fixed",inset:0,zIndex:150,background:"rgba(0,0,0,0.4)",backdropFilter:"blur(4px)"}}/>}
 
       {/* Sidebar */}
-      <div style={{position:"fixed",top:0,left:0,bottom:0,width:256,zIndex:160,background:t.nav,backdropFilter:"blur(24px) saturate(1.8)",borderRight:`2px solid ${t.border}`,boxShadow:t.shadow,transform:sidebar?"translateX(0)":"translateX(-100%)",transition:"transform 0.28s cubic-bezier(0.34,1.1,0.64,1)",display:"flex",flexDirection:"column"}}>
+      <div className="noj-sidebar" style={{position:"fixed",top:0,left:0,bottom:0,width:256,zIndex:160,background:t.nav,backdropFilter:"blur(24px) saturate(1.8)",borderRight:`2px solid ${t.border}`,boxShadow:t.shadow,transform:sidebar?"translateX(0)":"translateX(-100%)",transition:"transform 0.28s cubic-bezier(0.34,1.1,0.64,1)",display:"flex",flexDirection:"column"}}>
         <div style={{padding:"22px 20px 16px",borderBottom:`1.5px solid ${t.border}`,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
           <div style={{display:"flex",alignItems:"center",gap:10}}>
-            <div style={{width:34,height:34,borderRadius:12,background:`linear-gradient(135deg,${C.red},${C.blue})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,boxShadow:`0 3px 14px ${C.blue}44`}}>🎮</div>
+            <div style={{width:34,height:34,borderRadius:12,background:`linear-gradient(135deg,${C.red},${C.blue})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🎮</div>
             <span style={{fontFamily:"'Fredoka One',cursive",fontSize:20,color:C.red}}>NOJ Path</span>
           </div>
-          <button onClick={()=>setSidebar(false)} style={{background:"none",border:"none",cursor:"pointer",fontSize:22,color:t.mute,lineHeight:1}}>✕</button>
+          <button onClick={()=>setSidebar(false)} style={{background:"none",border:"none",cursor:"pointer",fontSize:22,color:t.mute}}>✕</button>
         </div>
-
         <div style={{flex:1,padding:"14px 12px",display:"flex",flexDirection:"column",gap:4}}>
           {NAV_TABS.map(tab=>{
             const active=page===tab.id;
-            return (
-              <button key={tab.id} onClick={()=>navigate(tab.id)} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 16px",borderRadius:16,border:"none",cursor:"pointer",background:active?`linear-gradient(135deg,${C.blue},${C.sky})`:t.pill,color:active?"#fff":t.sub,fontFamily:"'Nunito',sans-serif",fontSize:14,fontWeight:800,textAlign:"left",transition:"all 0.2s cubic-bezier(0.34,1.2,0.64,1)",transform:active?"scale(1.02)":"scale(1)",boxShadow:active?`0 4px 16px ${C.blue}44`:"none"}}>
+            return(
+              <button key={tab.id} onClick={()=>navigate(tab.id)} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 16px",borderRadius:16,border:"none",cursor:"pointer",background:active?`linear-gradient(135deg,${C.blue},${C.sky})`:t.pill,color:active?"#fff":t.sub,fontFamily:"'Nunito',sans-serif",fontSize:14,fontWeight:800,textAlign:"left",transition:"all 0.2s",boxShadow:active?`0 4px 16px ${C.blue}44`:"none"}}>
                 <span style={{fontSize:20}}>{tab.emoji}</span>{tab.label}
               </button>
             );
           })}
         </div>
-
         <div style={{padding:"16px 12px",borderTop:`1.5px solid ${t.border}`}}>
           <button onClick={()=>setDark(d=>!d)} style={{width:"100%",display:"flex",alignItems:"center",gap:12,padding:"11px 16px",borderRadius:16,border:`1.5px solid ${t.border}`,background:"transparent",color:t.sub,cursor:"pointer",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:800}}>
             {dark?"☀️ Light Mode":"🌙 Dark Mode"}
@@ -754,26 +778,42 @@ export default function App() {
             {[0,1,2].map(i=><div key={i} style={{width:15,height:2,borderRadius:99,background:t.sub}}/>)}
           </button>
           <div style={{display:"flex",alignItems:"center",gap:8}}>
-            <div style={{width:32,height:32,borderRadius:10,background:`linear-gradient(135deg,${C.red},${C.blue})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,boxShadow:`0 3px 12px ${C.blue}33`}}>🎮</div>
+            <div style={{width:32,height:32,borderRadius:10,background:`linear-gradient(135deg,${C.red},${C.blue})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17}}>🎮</div>
             <span style={{fontFamily:"'Fredoka One',cursive",fontSize:19,color:C.red}}>NOJ Path</span>
           </div>
         </div>
-
         <div style={{fontFamily:"'Fredoka One',cursive",fontSize:15,color:t.sub,flex:1,textAlign:"center"}}>
           {NAV_TABS.find(tab=>tab.id===page)?.label}
         </div>
-
         <button onClick={()=>setDark(d=>!d)} style={{width:36,height:36,borderRadius:10,border:`1.5px solid ${t.border}`,background:t.card,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,boxShadow:t.shadowS}}>
           {dark?"☀️":"🌙"}
         </button>
       </nav>
 
-      {/* Page */}
-      <div key={page} style={{position:"relative",zIndex:1,animation:"fadeSlide 0.3s ease"}}>
-        {page==="roadmap"    && <RoadmapPage    dark={dark}/>}
-        {page==="resources"  && <ResourcesPage  dark={dark}/>}
-        {page==="quests"     && <SideQuestsPage dark={dark}/>}
+      {/* Page content */}
+      <div className="noj-page-wrap" key={page} style={{position:"relative",zIndex:1,animation:"fadeSlide 0.3s ease"}}>
+        {page==="roadmap"   && <RoadmapPage    dark={dark}/>}
+        {page==="resources" && <ResourcesPage  dark={dark}/>}
+        {page==="quests"    && <SideQuestsPage dark={dark}/>}
       </div>
+
+      {/* Mobile bottom nav bar */}
+      <nav className="noj-bottom-nav">
+        {NAV_TABS.map(tab=>{
+          const active=page===tab.id;
+          return(
+            <button key={tab.id} onClick={()=>navigate(tab.id)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:3,padding:"6px 4px",borderRadius:14,border:"none",cursor:"pointer",background:active?`${C.blue}18`:"transparent",transition:"all 0.2s"}}>
+              <span style={{fontSize:22,lineHeight:1}}>{tab.emoji}</span>
+              <span style={{fontFamily:"'Nunito',sans-serif",fontSize:10,fontWeight:800,color:active?C.blue:t.mute}}>{tab.label}</span>
+              {active&&<div style={{width:20,height:3,borderRadius:99,background:`linear-gradient(90deg,${C.blue},${C.sky})`,marginTop:1}}/>}
+            </button>
+          );
+        })}
+        <button onClick={()=>setDark(d=>!d)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:3,padding:"6px 4px",borderRadius:14,border:"none",cursor:"pointer",background:"transparent"}}>
+          <span style={{fontSize:22,lineHeight:1}}>{dark?"☀️":"🌙"}</span>
+          <span style={{fontFamily:"'Nunito',sans-serif",fontSize:10,fontWeight:800,color:t.mute}}>{dark?"Light":"Dark"}</span>
+        </button>
+      </nav>
     </div>
   );
 }
