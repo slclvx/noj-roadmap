@@ -3,8 +3,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 // ─────────────────────────────────────────────────────────────────────────────
 // CONFIG — fill these in
 // ─────────────────────────────────────────────────────────────────────────────
-const SB_URL  = "https://zaktfcseezcxnminyjtx.supabase.co";
-const SB_ANON = "sb_publishable_G1YWw2gtJgKFGyeDZj9K9g_r0AKIFr7";
+const SB_URL  = "https://pfqlemdimzbpvxkrdddu.supabase.co";
+const SB_ANON = "sb_publishable_9J_wjiyy0EDH78cQmD1Yng__JONyJvn";
 
 // Change this to whatever PIN you want — only you will know it
 const OWNER_PIN = "nintend0";
