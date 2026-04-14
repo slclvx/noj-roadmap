@@ -6,6 +6,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 const SB_URL  = "https://zikzjouumufjndzeifnz.supabase.co";
 const SB_ANON = "sb_publishable_S0MqxHx-Njdkl194-4pDrQ_1MdRRRBC";
 const OWNER   = "sebastianosky"; // only this username gets edit controls
+
 // ─────────────────────────────────────────────────────────────────────────────
 // SUPABASE HELPERS
 // ─────────────────────────────────────────────────────────────────────────────
