@@ -79,62 +79,138 @@ const PHASES = [
   {id:1,num:"01",emoji:"🌱",label:"PHASE 1",title:"ROOTS",age:"14–15",where:"Las Vegas → ATECH High School",
    tagline:"Become someone worth following before anyone is watching.",accent:C.green,
    summary:"This is my foundation year at ATECH (Advanced Technologies Academy), a public magnet high school in Las Vegas focused on technology and engineering. Nothing flashy happens here — but everything depends on it. I'm building the internal architecture that the rest of my life runs on.",
-   milestones:["Get accepted into ATECH and lock in the Advanced Computer Science pathway","Start Genki I Japanese and do it every single day — no gaps","Write my first real program — not a tutorial, something I thought of","Read Ask Iwata cover to cover. Then read it again.","Build one habit system and keep it for 6 months straight","Enroll in and pass AP Computer Science Principles","Start a GitHub account and push my first project"],
+   milestones:[
+     "Get accepted into ATECH and lock in the Advanced Computer Science pathway",
+     "Start Genki I Japanese and do it every single day — no gaps",
+     "Write my first real program — not a tutorial, something I thought of",
+     "Read Ask Iwata cover to cover. Then read it again.",
+     "Build one habit system and keep it for 6 months straight",
+     "Enroll in and pass AP Computer Science Principles",
+     "Start a GitHub account and push my first project",
+   ],
    actions:["Study Japanese 30 min daily minimum — immersion counts (anime, games in JP)","Start a coding journal: what I built, what broke, what I learned","Follow Nintendo news actively — understand the business, not just the games","Find one person smarter than me in CS and learn from them","Join any coding club or extracurricular at ATECH","Research what Stanford CS looks for in applicants — start building toward it now"],
    build_toward:"Consistency. The ability to show up when it's boring. This phase has no audience — that's the point.",
    iwata_note:"Iwata taught himself to program at 12 on a calculator. He didn't wait for school to give him permission.",
    honest:"Most people with big goals fail here — not from lack of talent, but lack of follow-through on small things. I won't be most people.",
    school:{name:"ATECH — Advanced Technologies Academy",type:"Public Magnet High School",location:"Las Vegas, NV",focus:"Technology, Engineering & Computer Science",ap:["AP Computer Science Principles","AP Computer Science A","AP Calculus AB"],note:"One of Nevada's top STEM high schools. Acceptance is competitive. The AP CS track is my foundation before Stanford."}},
+
   {id:2,num:"02",emoji:"⚙️",label:"PHASE 2",title:"CONSTRUCTION",age:"15–17",where:"ATECH High School — Deep",
    tagline:"Build things. Break things. Understand things.",accent:C.sky,
    summary:"ATECH is my first real arena. This is where I stop being someone who wants to code and become someone who does. I'm stacking reps — Japanese, AP classes, programming projects, and creative thinking. Every AP I take here is a brick in the Stanford application.",
-   milestones:["Complete Genki II — no shortcuts, no skipping grammar","Build at least 3 real projects and put them on GitHub","Take on a leadership role at ATECH — club, group, anything","Read deeply into Nintendo's history and internal culture","Get my first programming win that genuinely impresses someone","Pass AP Computer Science A with a 5","Pass AP Calculus AB","Start preparing for AP Japanese Language if offered"],
+   milestones:[
+     "Complete Genki II — no shortcuts, no skipping grammar",
+     "Build at least 3 real projects and put them on GitHub",
+     "Take on a leadership role at ATECH — club, group, anything",
+     "Read deeply into Nintendo's history and internal culture",
+     "Get my first programming win that genuinely impresses someone",
+     "Pass AP Computer Science A with a 5",
+     "Pass AP Calculus AB",
+     {text:"Excel at ATECH — graduate top of the CS track", linkedQuestId:"sq17"},
+     "Start preparing for AP Japanese Language if offered",
+   ],
    actions:["Start consuming Japanese media without subtitles — even 10 min/day","Enter at least one CS competition or hackathon (Nevada FBLA, ACSL, or similar)","Study Iwata's GDC talks and Nintendo Directs — analyze his communication style","Read Game Over like a business case study, not entertainment","Begin understanding what 'fun' means as a design philosophy, not just a feeling","Maintain a 4.0+ GPA — ATECH's workload is real, don't slip","Build relationships with teachers who can write strong Stanford rec letters"],
    build_toward:"A portfolio of real work. Strong AP scores. The beginning of a reputation, even locally. Proof I can lead something small.",
    iwata_note:"At HAL, Iwata was the person people went to when something was impossible. Not because he had the title — because he had the results.",
    honest:"ATECH is my springboard to Stanford, but only if I treat it that way. I do more than is required. Always.",
    school:{name:"ATECH — Advanced Technologies Academy",type:"Public Magnet High School",location:"Las Vegas, NV",focus:"Technology, Engineering & Computer Science",ap:["AP Computer Science A","AP Calculus AB","AP Statistics","AP Physics","AP English Language","AP Japanese Language & Culture (if available)"],note:"Junior and senior years at ATECH are where the Stanford application is really built. AP scores, projects, leadership, and research matter here."}},
+
   {id:3,num:"03",emoji:"🎓",label:"PHASE 3",title:"STANFORD",age:"18–22",where:"Stanford University",
    tagline:"CS undergrad → CS + MBA joint degree. Four years that reshape how I think.",accent:C.red,
    summary:"Stanford is not just a degree — it's a network, a credibility marker, and a place where I'll meet the people who shape the industry I want to lead.",
-   milestones:["Get into Stanford CS — my application revolves around Nintendo, Japan, and building","Begin working toward the CS + MBA joint program early","Achieve N2 Japanese by sophomore year — N1 before graduation","Complete at least 2 Apple internships (aiming for 3)","Build one project that gets real users or real attention","Graduate with both CS and MBA components complete"],
+   milestones:[
+     {text:"Get into Stanford CS — my application revolves around Nintendo, Japan, and building", linkedQuestId:"sq16"},
+     "Begin working toward the CS + MBA joint program early",
+     "Achieve N2 Japanese by sophomore year",
+     {text:"Pass JLPT N1 before graduation", linkedQuestId:"sq2"},
+     "Complete at least 2 Apple internships (aiming for 3)",
+     "Build one project that gets real users or real attention",
+     "Graduate with both CS and MBA components complete",
+   ],
    actions:["Take every course that touches product, design, and human behavior","Join Stanford's Japanese language and culture community","Study business Japanese alongside academic Japanese","Start reading Nikkei even when it's hard","Network intentionally — people connected to Nintendo, Sony, the game industry","Write. Publish things. Build a voice.","Understand P&L, operating margins, platform economics — the business of gaming"],
    build_toward:"A degree that signals elite technical AND business capability. Japanese at near-professional level. A network that opens doors.",
    iwata_note:"Iwata became president of Nintendo not because he climbed a ladder — because he solved problems nobody else could, and did it with integrity.",
    honest:"The CS + MBA joint is hard to get into — I talk to the program office early, not late. Apple internships don't just happen. I need to be exceptional."},
+
   {id:4,num:"04",emoji:"🍎",label:"PHASE 4",title:"APPLE",age:"20–24",where:"Apple — Cupertino",
    tagline:"Learn what world-class product culture feels like from the inside.",accent:C.purple,
    summary:"Apple is one of the few companies that matches Nintendo in product obsession and design philosophy. This is my finishing school before the game industry.",
-   milestones:["Convert internships into a full-time offer post-graduation","Work in a role touching product, platform, or developer experience","Interface with cross-functional teams","Build a reputation as someone who improves whatever room I'm in","Hit Japanese fluency that lets me run full meetings without strain"],
+   milestones:[
+     "Convert internships into a full-time offer post-graduation",
+     "Work in a role touching product, platform, or developer experience",
+     "Interface with cross-functional teams",
+     "Build a reputation as someone who improves whatever room I'm in",
+     {text:"Read Nintendo IR reports fluently in Japanese", linkedQuestId:"sq10"},
+     "Hit full Japanese business fluency before leaving Apple",
+   ],
    actions:["Study Apple's internal review process — the attention to detail is the lesson","Observe how senior leaders communicate: precision, conviction, simplicity","Continue keigo and business Japanese — executive-level register now","Consume Japanese business news and Nintendo investor reports in Japanese","Build relationships with anyone connected to Japan, gaming, or consumer hardware"],
    build_toward:"Real industry credibility. Executive communication skills. A résumé that makes Nintendo of America pay attention.",
    iwata_note:"Iwata once said he didn't want to be a manager — he wanted to be a creator who happened to manage. I carry that into Apple. I stay close to the product.",
    honest:"I don't stay at Apple longer than I need to. 2–3 years post-grad is enough. The goal is NOA, not Apple lifer."},
+
   {id:5,num:"05",emoji:"🎮",label:"PHASE 5",title:"NINTENDO OF AMERICA",age:"24–30",where:"Nintendo of America — Redmond, WA",
    tagline:"Get inside the company. Learn how it breathes. Make myself impossible to ignore.",accent:C.orange,
    summary:"This is the most critical phase. Getting to NOA is one thing. What I do inside it determines whether I ever get the call from Japan.",
-   milestones:["Land a senior role at NOA — product, platform, or business development","Within 2 years, become known for understanding both the technical AND cultural side","Complete at least one project with direct NOJ collaboration","Get a sponsor — a senior person who actively advocates for me","Begin traveling to Japan regularly on Nintendo business","Demonstrate Japanese fluency in professional settings with NOJ counterparts"],
+   milestones:[
+     "Land a senior role at NOA — product, platform, or business development",
+     "Within 2 years, become known for understanding both the technical AND cultural side",
+     "Complete at least one project with direct NOJ collaboration",
+     "Get a sponsor — a senior person who actively advocates for me",
+     "Begin traveling to Japan regularly on Nintendo business",
+     {text:"Pass BJT at J2 or higher", linkedQuestId:"sq8"},
+     {text:"Master keigo at executive level — Sonkeigo and Kenjougo automatic", linkedQuestId:"sq9"},
+     {text:"Master Japanese business etiquette — meishi, kamiza, nemawashi", linkedQuestId:"sq11"},
+   ],
    actions:["Learn Nintendo's internal decision-making — nemawashi, ringi, consensus culture","Be patient. Japanese corporate culture rewards long-term trust.","Do work so good that people can't stop noticing","Study Nintendo Directs, Iwata Asks, and shareholder letters deeply","Read every Nintendo shareholder Q&A in Japanese","Build genuine relationships with NOJ counterparts — not networking, real relationships"],
    build_toward:"A reputation inside Nintendo that crosses the Pacific. The trust of Japanese colleagues. An invitation to Japan.",
    iwata_note:"Iwata built trust through decades of doing exactly what he said he would do, exactly when he said he would do it. At Nintendo, your word is your currency.",
    honest:"This phase might take longer than I expect. That's okay. The people who make it stayed consistent for 10 years, not the ones who pushed hardest for 2."},
+
   {id:6,num:"06",emoji:"🗾",label:"PHASE 6",title:"NINTENDO OF JAPAN",age:"30–38",where:"Kyoto, Japan — Nintendo HQ",
    tagline:"I'm no longer visiting. I'm here.",accent:C.pink,
    summary:"The transition to Japan is the hardest and most important move of my career. My language, cultural fluency, technical depth, and track record all have to be unimpeachable.",
-   milestones:["Secure a formal transfer or senior appointment at NOJ","Operate fully in Japanese — all meetings, all documents, all relationships","Lead a product or platform initiative touching the global business","Build trust with the Nintendo board and senior leadership in Kyoto","Be recognized as someone who thinks like Nintendo, not just works at Nintendo","Position myself for executive appointment — Managing Director, then higher"],
+   milestones:[
+     "Secure a formal transfer or senior appointment at NOJ",
+     "Operate fully in Japanese — all meetings, all documents, all relationships",
+     {text:"Live in Japan for at least one full year", linkedQuestId:"sq12"},
+     "Lead a product or platform initiative touching the global business",
+     "Build trust with the Nintendo board and senior leadership in Kyoto",
+     "Be recognized as someone who thinks like Nintendo, not just works at Nintendo",
+     "Position myself for executive appointment — Managing Director, then higher",
+   ],
    actions:["Absorb everything. Observe how decisions are made at HQ level.","Master the social fabric — who defers to whom, who the real influencers are","Contribute to creative direction — not just business execution","Become fluent in Nintendo's history and design philosophy at a level few outsiders reach","Become the person who bridges East and West — the one both sides trust equally","Stay humble. The leader who listens is respected more than the one who talks."],
    build_toward:"Executive appointment. The trust of the Kyoto inner circle. A reputation as someone who makes Nintendo more Nintendo, not less.",
    iwata_note:"Iwata took a 50% pay cut before laying off a single employee. That act alone defined his leadership more than any product launch.",
    honest:"I will be tested here in ways I cannot fully prepare for. The question is whether I've built enough trust and love for this company that the foreignness stops mattering."},
+
   {id:7,num:"07",emoji:"👑",label:"PHASE 7",title:"CEO",age:"38–50+",where:"Nintendo of Japan — The Chair",
    tagline:"I didn't just get here. I earned here.",accent:C.yellow,
    summary:"This is the destination — but not the point. The point was always to build something worth leading. My job is to carry Nintendo's soul forward while opening it to the world.",
-   milestones:["Appointment as CEO / Representative Director of Nintendo Co., Ltd.","First Nintendo Direct as CEO — set the tone for my era","Define my philosophy publicly, the way Iwata defined his","Build a team that reflects Nintendo's values and a global future","Make a decision that is hard and right — the moment that defines my leadership"],
+   milestones:[
+     "Appointment as CEO / Representative Director of Nintendo Co., Ltd.",
+     "First Nintendo Direct as CEO — set the tone for my era",
+     "Define my philosophy publicly, the way Iwata defined his",
+     "Build a team that reflects Nintendo's values and a global future",
+     "Make a decision that is hard and right — the moment that defines my leadership",
+   ],
    actions:["Lead with fun. Iwata: 'The opposite of fun is not serious — it's boring.'","Be a player first. Never let the business make me forget why any of this matters.","Communicate directly with fans — Nintendo's audience is its most important asset","Make Nintendo more Nintendo, not more like everyone else","Mentor the next generation — someone is watching me the way I watched Iwata"],
    build_toward:"A legacy. Not a résumé.",
    iwata_note:"On my business card I am a corporate president. In my mind I am a game developer. But in my heart I am a gamer.",
    honest:"I will have made it. I won't forget the 14-year-old who made the list."},
 ];
+
+// Helper — milestones can be a string or {text, linkedQuestId}
+const mText = (m) => typeof m === "string" ? m : m.text;
+const mLink  = (m) => typeof m === "string" ? null : m.linkedQuestId;
+
+// Map: questId → which phase+milestoneIndex it links to (for reverse sync)
+const QUEST_PHASE_LINKS = {};
+PHASES.forEach(phase => {
+  phase.milestones.forEach((m, i) => {
+    const qid = mLink(m);
+    if (qid) QUEST_PHASE_LINKS[qid] = { phaseId: phase.id, mIdx: i };
+  });
+});
+
 
 const BOOK_PHASES = [
   {id:1,label:"PHASE 1",title:"FOUNDATION IDENTITY",age:"14–15",accent:C.green,focus:["Become like Satoru Iwata internally","Start Japanese basics","Build programming mindset"],books:[
@@ -185,17 +261,114 @@ const BOOK_PHASES = [
 
 const QUEST_STATUSES = ["Not Started","In Progress","Complete"];
 const DEFAULT_QUESTS = [
-  {id:"sq1",emoji:"💍",title:"Marry Ariana",category:"Life",color:C.pink,
-   description:"My most important side quest. Started February 2026 — aiming for early 20s. She deserves a proposal as thoughtful as everything else on this list.",
-   status:"In Progress",startDate:"2026-02-13",targetDate:"Early 20s",
-   liveCounter:true,
+
+  // ── PINNED — always first ──────────────────────────────────────────────────
+  {id:"sq1", emoji:"💍", title:"Marry Ariana", category:"Life", color:C.pink,
+   pinned:true, sortAge:0,
+   description:"My most important side quest. Two months in as of April 2026 — aiming for early 20s. She deserves a proposal as thoughtful as everything else on this list. This one isn't on a schedule. It's on a feeling.",
+   status:"In Progress", startDate:"2026-02-13", targetDate:"Early 20s", liveCounter:true,
    milestones:["Keep showing up every single day","Build a life worth sharing","Plan something unforgettable","Ask the question"]},
-  {id:"sq2",emoji:"🇯🇵",title:"Pass JLPT N1",category:"Japanese",color:C.teal,description:"The highest level of the Japanese Language Proficiency Test. Non-negotiable before I'm a serious NOJ candidate.",status:"Not Started",targetDate:"Before age 22",milestones:["Pass N5","Pass N4","Pass N3","Pass N2","Pass N1"]},
-  {id:"sq3",emoji:"🎮",title:"Ship a Real Game",category:"Tech",color:C.purple,description:"Iwata shipped games. I need to ship a game. Doesn't have to be big — has to be real.",status:"Not Started",targetDate:"Before age 18",milestones:["Learn a game engine (Unity or Godot)","Build a prototype","Get 10 people to playtest","Ship it publicly"]},
-  {id:"sq4",emoji:"🏆",title:"Win a Hackathon",category:"Tech",color:C.blue,description:"Not just participate — win. The competitive pressure of a hackathon is unlike anything else.",status:"Not Started",targetDate:"Before age 17",milestones:["Enter first hackathon","Build something in 24 hours","Place in top 3","Win one"]},
-  {id:"sq5",emoji:"📢",title:"Give a Public Talk",category:"Leadership",color:C.orange,description:"Iwata was one of the greatest communicators in the industry. I need to find my voice in public.",status:"Not Started",targetDate:"Before age 20",milestones:["Present at school","Speak at a local event","Give a talk at a conference"]},
-  {id:"sq6",emoji:"🌸",title:"Live in Japan for a Year",category:"Japan",color:C.red,description:"Not visit. Live. Before I join NOJ I need to have actually lived in Japan.",status:"Not Started",targetDate:"Age 25–30",milestones:["Visit Japan for the first time","Complete a study or work exchange","Live independently in Japan for 12+ months"]},
-  {id:"sq7",emoji:"📱",title:"Build & Launch an App",category:"Tech",color:C.green,description:"A real app with real users. Not a class project — something I made because I saw a problem and decided to fix it.",status:"Not Started",targetDate:"Before age 19",milestones:["Identify a real problem","Build an MVP","Get 100 users","Maintain and improve it"]},
+
+  // ── AGE 14–15 ─────────────────────────────────────────────────────────────
+  {id:"sq17", emoji:"🏫", title:"Excel at ATECH", category:"Academic", color:C.green,
+   linkedPhase:"Phase 2 · Construction", sortAge:15,
+   description:"ATECH is the first door I have to open. My record here — GPA, AP scores, projects, leadership — is the raw material of the Stanford application. Every grade, every project, every extra thing I do here is a brick. I treat ATECH like a job, not just school, because for me it is one.",
+   status:"Not Started", targetDate:"Age 14–18",
+   milestones:["Get accepted into ATECH's Advanced Computer Science pathway","Maintain 4.0+ GPA every semester without exception","Pass AP Computer Science Principles with a 5","Pass AP Computer Science A with a 5","Take AP Japanese Language & Culture and perform at the top of the class","Take on a visible leadership role: officer of a club, project lead, or club founder","Win at least one academic award or recognition at school level or above","Graduate as one of the top students in the CS and/or Japanese track"]},
+
+  // ── AGE 15–17 ─────────────────────────────────────────────────────────────
+  {id:"sq15", emoji:"🤝", title:"Build a Real Industry Network", category:"Leadership", color:C.teal,
+   linkedPhase:"Phase 5 · Nintendo of America", sortAge:16,
+   description:"Iwata didn't get to Nintendo through a cold application. He got there through a decade of relationships, reputation, and trust built person by person. I need to start building real connections in the CS, game, and Japan-adjacent spaces now — not when I need them.",
+   status:"Not Started", targetDate:"Ongoing from age 16",
+   milestones:["Connect meaningfully with 3 people working in the game industry","Find a mentor in CS or tech outside of school","Attend at least one game industry event in person (GDC, PAX, a local game dev meetup)","Build a LinkedIn profile that accurately represents my work and goals","Get a genuine introduction to someone at a Japanese company through a mutual contact","Build a relationship with a Japanese speaker at a professional level","Have at least 2 people in the industry who know my name, know my work, and would give me a reference unprompted"]},
+
+  {id:"sq4", emoji:"🏆", title:"Win a Hackathon", category:"Tech", color:C.blue,
+   linkedPhase:"Phase 2 · Construction", sortAge:17,
+   description:"Not just participate — win, or at minimum place. Hackathons under real time pressure, with real judges, against real competition are unlike anything else. They test speed, judgment, communication, and the ability to ship under stress.",
+   status:"Not Started", targetDate:"Before age 17",
+   milestones:["Enter a first hackathon — focus on showing up, not winning","Build a working demo within 24 hours regardless of quality","Submit and present to judges — practice articulating what you built and why it matters","Place in the top 3 of a competitive hackathon","Win a hackathon outright","Target Nevada or national CS competitions: FBLA, ACSL, USACO, Congressional App Challenge"]},
+
+  // ── AGE 18–22 ─────────────────────────────────────────────────────────────
+  {id:"sq3", emoji:"🎮", title:"Ship a Real Game", category:"Tech", color:C.purple,
+   linkedPhase:"Phase 2 · Construction", sortAge:18,
+   description:"Iwata shipped games. Before becoming president of Nintendo, he personally rewrote Pokémon Stadium's battle code from scratch in a few weeks to save E3. I need to ship a game — not for the portfolio, but for the understanding. You cannot lead a game company without knowing what it feels like to put something real into the world.",
+   status:"Not Started", targetDate:"Before age 18",
+   milestones:["Learn a game engine — Unity (C#) or Godot (GDScript) — well enough to build something real","Complete a game jam project (48–72 hours) to understand scoped development","Build a standalone game prototype with a complete game loop","Get at least 10 people outside my circle to playtest and give honest feedback","Iterate based on feedback — this is the step most people skip","Ship it publicly on itch.io, the App Store, or similar","Write a postmortem: what worked, what didn't, what I'd do differently"]},
+
+  {id:"sq14", emoji:"🔬", title:"Do Independent CS Research", category:"Tech", color:C.sky,
+   linkedPhase:"Phase 3 · Stanford", sortAge:18,
+   description:"Stanford and top companies look for people who don't just learn — they discover. Independent research before college signals intellectual initiative that almost no applicant has.",
+   status:"Not Started", targetDate:"Before age 18",
+   milestones:["Identify a genuine question in CS, game design, or human-computer interaction","Read at least 5 academic papers related to the question","Design and execute a small study or experiment","Document findings in a written paper or detailed report","Submit to a high school research program (Regeneron, ISEF, local university programs)","Post findings publicly — GitHub, a personal blog, or an academic pre-print","Cite the research experience in the Stanford application"]},
+
+  {id:"sq16", emoji:"🎓", title:"Get Into Stanford", category:"Academic", color:C.red,
+   linkedPhase:"Phase 3 · Stanford", sortAge:18,
+   description:"Stanford CS is the single credential that makes Nintendo of America take the résumé seriously before I've built a track record there. Acceptance rate is ~4%. My application cannot be generic — it has to tell a story no other applicant can tell.",
+   status:"Not Started", targetDate:"Age 17–18",
+   milestones:["Maintain a 4.0+ GPA through all four years at ATECH","Score 1500+ on the SAT or 34+ on the ACT","Pass at least 4 AP exams with 4s or 5s — especially AP CS A, AP Calculus, AP Japanese","Build a GitHub portfolio with 5+ real, documented, non-tutorial projects","Win or place in at least one competitive CS event at a regional or national level","Draft and refine a Stanford personal statement centered specifically on the NOJ goal","Secure strong recommendation letters from ATECH CS and Japanese teachers","Submit a polished, story-driven application and get accepted"]},
+
+  {id:"sq7", emoji:"📱", title:"Build & Launch an App", category:"Tech", color:C.green,
+   sortAge:19,
+   description:"A real app with real users. Not a class project built for a grade — something I made because I saw a problem in the world and decided to fix it myself.",
+   status:"Not Started", targetDate:"Before age 19",
+   milestones:["Identify a real problem worth solving","Build an MVP that solves the core problem only","Get feedback from 10 strangers — not friends or family","Iterate and improve based on that feedback","Reach 100 users organically, without paid advertising","Maintain and update the app based on user needs for at least 6 months"]},
+
+  {id:"sq5", emoji:"📢", title:"Give a Public Talk", category:"Leadership", color:C.orange,
+   linkedPhase:"Phase 3 · Stanford", sortAge:20,
+   description:"Iwata was one of the greatest communicators in the industry. Nintendo Directs, shareholder meetings, GDC talks — he spoke with clarity, warmth, and precision in front of millions. I need to develop my voice publicly.",
+   status:"Not Started", targetDate:"Before age 20",
+   milestones:["Present a project or idea to my class at ATECH","Speak at a school-wide event, science fair, or club presentation","Give a prepared talk at a community or local tech event","Apply to speak at a student hackathon, conference, or competition","Give a talk to an audience of 50+ people who didn't know me beforehand","Speak in Japanese in front of an audience of any size"]},
+
+  {id:"sq18", emoji:"🕹️", title:"Deep Nintendo Knowledge", category:"Nintendo", color:C.purple,
+   linkedPhase:"Phase 5 · Nintendo of America", sortAge:20,
+   description:"I cannot lead Nintendo without knowing Nintendo at a level deeper than any fan. I need to understand the full history — every console, every pivot, every failure, every genius decision — and speak to all of it fluently in both English and Japanese.",
+   status:"Not Started", targetDate:"Before age 20",
+   milestones:["Read Game Over by David Sheff (complete Nintendo history through the 90s)","Read and study all available Iwata Asks interview series in full","Watch every Nintendo Direct from 2011 to present — note the messaging evolution","Study each hardware generation: what worked, what failed, and why (Virtual Boy, Wii U, DS, Switch)","Read Nintendo's IR reports and shareholder Q&As for the past 10 years","Understand Nintendo's IP portfolio: what they own, how they protect it, how they license it","Be able to explain Nintendo's platform strategy, first-party advantage, and global market position in depth","Read Nintendo's IR materials in Japanese and be able to discuss them in Japanese without notes"]},
+
+  {id:"sq2", emoji:"🇯🇵", title:"Pass JLPT N1", category:"Japanese", color:C.teal,
+   linkedPhase:"Phase 3 · Stanford", sortAge:22,
+   description:"The highest level of the Japanese Language Proficiency Test. N1 means I can read newspapers, follow native-speed conversations, and operate in any Japanese professional environment without assistance. Non-negotiable before I'm a serious NOJ candidate.",
+   status:"Not Started", targetDate:"Before age 22",
+   milestones:["Pass N5 — basic hiragana, katakana, ~800 words","Pass N4 — basic grammar, ~1,500 words","Pass N3 — intermediate, bridge level","Pass N2 — business-adjacent, read most newspapers with effort","Pass N1 — native-level reading, complex listening, full professional use"]},
+
+  {id:"sq9", emoji:"🎩", title:"Master Keigo — Honorific Speech", category:"Japanese", color:C.purple,
+   linkedPhase:"Phase 5 · Nintendo of America", sortAge:22,
+   description:"Keigo is not optional for a Japanese executive. It is the baseline of credibility in every boardroom, every meeting, every relationship. Three layers: Teineigo (polite), Sonkeigo (respectful — for superiors), and Kenjougo (humble — for yourself). Executives must switch between all three fluidly.",
+   status:"Not Started", targetDate:"Before age 22",
+   milestones:["Master Teineigo — polite daily speech (です/ます forms)","Learn Sonkeigo forms: いらっしゃる (to be/go/come), おっしゃる (to say), なさる (to do), ご覧になる (to see)","Learn Kenjougo forms: 参る・伺う (to go/visit), 申す (to say), いたす (to do), 拝見する (to see)","Study how to introduce yourself and others using correct levels in a meeting context","Practice switching registers in simulated business conversations","Drill phone call and email keigo — the most common professional contexts","Have a native Japanese business speaker evaluate my keigo for natural use","Use keigo correctly and automatically in a real Japanese professional setting"]},
+
+  {id:"sq11", emoji:"🃏", title:"Master Japanese Business Etiquette", category:"Japan", color:C.orange,
+   linkedPhase:"Phase 5 · Nintendo of America", sortAge:22,
+   description:"Language alone is not enough. Japanese corporate culture has precise physical and social protocols that signal whether you belong. These need to be automatic, not things I have to think about.",
+   status:"Not Started", targetDate:"Before age 22",
+   milestones:["Learn meishi kōkan (名刺交換) — present with both hands and a bow, receive with both hands, read it carefully, never write on it or pocket it carelessly","Learn kamiza/shimoza (上座/下座) — the seat farthest from the door is for the most senior person; never sit before being directed","Study nemawashi (根回し) — building consensus privately before formal meetings","Study ringi-sho (稟議書) — how formal decisions move up the approval chain","Learn aisatsu (挨拶) — formal greetings and self-introductions in business contexts","Study nomi-kai (飲み会) etiquette: pour drinks for others before yourself, wait for kanpai","Understand tatemae (建前) and honne (本音) — the gap between what is said and what is meant","Practice receiving constructive silence — in Japan, silence often signals disagreement","Participate in or simulate at least one full Japanese business meeting using all protocols correctly"]},
+
+  {id:"sq10", emoji:"📊", title:"Read Nintendo IR Reports in Japanese", category:"Japanese", color:C.green,
+   linkedPhase:"Phase 4 · Apple", sortAge:22,
+   description:"Nintendo publishes full Investor Relations (IR) reports, shareholder Q&As, and earnings presentations in Japanese. Reading these is how I understand exactly how Nintendo's leadership thinks about the business. Start after completing Tobira.",
+   status:"Not Started", targetDate:"Age 18–22",
+   milestones:["Complete Tobira as the reading foundation","Download Nintendo's most recent annual IR report (任天堂株式会社 有価証券報告書) in Japanese","Read the president's message (社長メッセージ) without a dictionary","Read the full financial summary with a dictionary, understanding all key metrics","Understand hardware unit sales, software attach rate, operating income, and net income in context","Read the shareholder Q&A transcript in Japanese and summarize key themes","Read IR reports from the past 5 years to understand strategic trajectory","Follow quarterly earnings releases in Japanese as they publish","Discuss Nintendo's financial position fluently in Japanese from memory"]},
+
+  // ── AGE 24–30 ─────────────────────────────────────────────────────────────
+  {id:"sq8", emoji:"💼", title:"Pass the BJT (Business Japanese Test)", category:"Japanese", color:C.sky,
+   linkedPhase:"Phase 5 · Nintendo of America", sortAge:24,
+   description:"JLPT tests language competency — BJT tests professional readiness. Japanese corporations actually use BJT scores when evaluating non-native candidates. A J2 score tells Nintendo of America and Nintendo of Japan that I'm professionally operational in Japanese.",
+   status:"Not Started", targetDate:"Before age 24",
+   milestones:["Study the BJT format: J1 (highest) to J5 scale, tests listening comprehension, reading, and business judgment","Reach JLPT N2 as the prerequisite foundation before attempting BJT","Study business vocabulary: 会議 (meetings), 交渉 (negotiations), 報告書 (reports), business email formats","Take official BJT practice tests and score J3 or above","Pass the official BJT at J2 level or higher","Add BJT score to LinkedIn profile, résumé, and Nintendo of America application"]},
+
+  {id:"sq13", emoji:"🏢", title:"Understand Japanese Corporate Structure", category:"Japan", color:C.teal,
+   linkedPhase:"Phase 5 · Nintendo of America", sortAge:24,
+   description:"Nintendo is a Japanese corporation — not an American one with Japanese branding. The decision-making structure, loyalty dynamics, pace of change, and internal hierarchy are fundamentally different. I need to understand this system deeply enough to operate inside it and eventually lead it.",
+   status:"Not Started", targetDate:"Before age 24",
+   milestones:["Study the kaisha (会社) structure: who holds real decision-making power vs. titular authority","Learn the ringi approval system: how proposals move through the organization for sign-off","Study seniority culture (年功序列, nenkō joretsu) and how it's evolving","Learn about the keiretsu system and how long-term business relationships work in Japan","Study how foreign executives have historically been received in Japanese companies","Read 'Japan's Software Factories' by Michael Cusumano for tech-specific context","Study Nintendo's specific organizational history: Yamauchi's leadership, Iwata's restructuring","Be able to explain Nintendo's internal decision-making process in a job interview — in Japanese"]},
+
+  // ── AGE 25–30 ─────────────────────────────────────────────────────────────
+  {id:"sq12", emoji:"🌸", title:"Live in Japan for a Year", category:"Japan", color:C.red,
+   linkedPhase:"Phase 6 · Nintendo of Japan", sortAge:25,
+   description:"Not visit — live. There is no substitute for this. I can study Japan endlessly, but living there reveals the gap between what I know and what I understand. The commute etiquette, the neighborhood rhythms, the unspoken social rules — I need all of that before I ask NOJ to trust me with the company.",
+   status:"Not Started", targetDate:"Age 25–30",
+   milestones:["Visit Japan for the first time as a tourist to get initial orientation","Spend at least 2 weeks navigating Japan independently and exclusively in Japanese","Apply for and complete a work exchange or study abroad program in Japan","Open a Japanese bank account and handle all finances without English assistance","Live in a Japanese neighborhood, not an expat apartment complex","Maintain all daily life — grocery shopping, doctor visits, landlord, neighbors — fully in Japanese for 12+ consecutive months","Build at least one genuine friendship with a Japanese person conducted entirely in Japanese","Reflect on what changed in my understanding of Japan that I couldn't have learned from books"]},
 ];
 
 const TYPE_META = {
@@ -353,35 +526,47 @@ function LastUpdated({ts,dark}){
   return <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:1}}>Updated {fmt}</span>;
 }
 
-// Live relationship counter — counts up from start date
+// Live relationship counter — counts calendar days, ticks at midnight
 function RelationshipCounter({startDate,color}) {
-  const [elapsed,setElapsed]=useState("");
+  const calcDays = () => {
+    // Parse as local date (YYYY-MM-DD) to avoid UTC offset issues
+    const [y,m,d] = startDate.split("-").map(Number);
+    const start = new Date(y, m-1, d, 0, 0, 0, 0); // local midnight on start date
+    const now = new Date();
+    const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+    return Math.floor((todayMidnight - start) / (1000 * 60 * 60 * 24));
+  };
+
+  const [days, setDays] = useState(calcDays);
 
   useEffect(()=>{
-    const update=()=>{
-      const start=new Date(startDate);
-      const now=new Date();
-      const diff=now-start;
-      const days=Math.floor(diff/(1000*60*60*24));
-      const months=Math.floor(days/30);
-      const weeks=Math.floor((days%30)/7);
-      const remainingDays=days%7;
-      let str="";
-      if(months>0)str+=`${months} month${months!==1?"s":""}, `;
-      if(weeks>0)str+=`${weeks} week${weeks!==1?"s":""}, `;
-      str+=`${remainingDays} day${remainingDays!==1?"s":""}`;
-      setElapsed(str);
+    // Update immediately, then schedule next tick at the next local midnight
+    const scheduleNextTick = () => {
+      const now = new Date();
+      const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 0, 0);
+      const msUntilMidnight = nextMidnight - now;
+      return setTimeout(()=>{
+        setDays(calcDays());
+        scheduleNextTick(); // reschedule
+      }, msUntilMidnight);
     };
-    update();
-    const interval=setInterval(update,60000);
-    return()=>clearInterval(interval);
+    const t = scheduleNextTick();
+    return () => clearTimeout(t);
   },[startDate]);
+
+  const months = Math.floor(days / 30);
+  const weeks  = Math.floor((days % 30) / 7);
+  const rem    = days % 7;
+  const parts  = [];
+  if (months > 0) parts.push(`${months} month${months!==1?"s":""}`);
+  if (weeks  > 0) parts.push(`${weeks} week${weeks!==1?"s":""}`);
+  parts.push(`${rem} day${rem!==1?"s":""}`);
 
   return(
     <div style={{marginTop:14,padding:"14px 18px",borderRadius:16,background:`${color}12`,border:`2px solid ${color}44`,textAlign:"center"}}>
       <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:`${color}99`,letterSpacing:3,textTransform:"uppercase",marginBottom:6}}>💍 Together</div>
-      <div style={{fontFamily:"'Fredoka One',cursive",fontSize:22,color,lineHeight:1.2}}>{elapsed}</div>
-      <div style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:`${color}88`,fontWeight:700,marginTop:4}}>and counting ✨</div>
+      <div style={{fontFamily:"'Fredoka One',cursive",fontSize:22,color,lineHeight:1.2}}>{parts.join(", ")}</div>
+      <div style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:`${color}88`,fontWeight:700,marginTop:4}}>{days} days and counting ✨</div>
     </div>
   );
 }
@@ -619,27 +804,37 @@ function StreakCard({streak, lastChecked, milestone, dark, onFire}) {
 function AgeGuidance({phase, dark}) {
   const t=T(dark);
   const today = new Date();
-  const birthYear = 2011; // 14 in 2025
-  const currentAge = today.getFullYear() - birthYear - (today.getMonth() < 8 ? 1 : 0);
-  const [startAge, endAge] = phase.age.split("–").map(a=>parseInt(a)||parseInt(a.replace("+","")));
-  const isOnTrack = currentAge >= startAge && currentAge <= (endAge||startAge+10);
-  const isAhead = currentAge < startAge;
-  const isBehind = endAge && currentAge > endAge;
+  // Born October 7, 2011
+  const born = new Date(2011, 9, 7);
+  const currentAge = Math.floor((today - born) / (365.25 * 24 * 60 * 60 * 1000));
+
+  const ageStr = phase.age; // e.g. "14–15", "38–50+", "22+"
+  const parts = ageStr.replace("+","").split("–").map(Number);
+  const startAge = parts[0];
+  const endAge = parts[1] || parts[0] + 12; // phases with "+" get a long window
+
+  const isOnTrack = currentAge >= startAge && currentAge <= endAge;
+  const isFuture  = currentAge < startAge;  // haven't reached this phase yet
+  const isBehind  = currentAge > endAge;    // past the target window
+
+  const label = isFuture
+    ? `This phase starts at age ${startAge} — ${startAge - currentAge} year${startAge-currentAge!==1?"s":""} from now`
+    : isOnTrack
+    ? "You're right on track for this phase"
+    : "This phase was meant for an earlier age — reflect on where you are";
+
+  const icon   = isFuture ? "🔮" : isOnTrack ? "✅" : "⏰";
+  const color  = isFuture ? C.blue : isOnTrack ? C.green : C.orange;
 
   return(
     <div style={{padding:"10px 16px",borderRadius:12,marginBottom:14,display:"flex",alignItems:"center",gap:10,
-      background: isOnTrack?`rgba(61,214,140,0.08)`:isAhead?`rgba(59,140,255,0.08)`:`rgba(255,140,66,0.08)`,
-      border: `1.5px solid ${isOnTrack?C.green:isAhead?C.blue:C.orange}33`
+      background:`${color}10`, border:`1.5px solid ${color}33`
     }}>
-      <span style={{fontSize:18}}>{isOnTrack?"✅":isAhead?"🚀":"⏰"}</span>
+      <span style={{fontSize:18}}>{icon}</span>
       <div>
-        <div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,fontWeight:800,color:isOnTrack?C.green:isAhead?C.blue:C.orange}}>
-          {isOnTrack?"You're right on track for this phase"
-           :isAhead?"You're ahead of schedule — great!"
-           :"This phase was meant for an earlier age — catch up!"}
-        </div>
+        <div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,fontWeight:800,color}}>{label}</div>
         <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:1,marginTop:2}}>
-          Target age: {phase.age} · Your age: ~{currentAge}
+          Target age: {phase.age} · Current age: {currentAge}
         </div>
       </div>
     </div>
@@ -825,22 +1020,25 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
     saveStatus(next);showToast("Status updated ✓","success");
   };
 
-  const toggleCheck=(phaseId,mIdx)=>{
+  const toggleCheck=(phaseId,mIdx,questChecksRef,saveQuestChecksRef)=>{
     if(!isOwner)return;
     const key=`${phaseId}-${mIdx}`;
     const next={...checks,[key]:!checks[key]};
     saveChecks(next,"Milestone checked off");
-    // Auto-update phase status based on completion
+    // Auto-update phase status
     const phase=PHASES.find(p=>p.id===phaseId);
     if(phase){
       const nowDone=phase.milestones.filter((_,i)=>next[`${phaseId}-${i}`]).length;
       const total=phase.milestones.length;
-      const autoStatus = nowDone===0?"Not Started":nowDone===total?"Complete":"In Progress";
-      const curStatus = phaseStatus[phaseId]||"Not Started";
-      if(autoStatus!==curStatus){
-        saveStatus({...phaseStatus,[phaseId]:autoStatus});
-      }
+      const autoStatus=nowDone===0?"Not Started":nowDone===total?"Complete":"In Progress";
+      if(autoStatus!==(phaseStatus[phaseId]||"Not Started")) saveStatus({...phaseStatus,[phaseId]:autoStatus});
       if(nowDone===total){fireConfetti();showToast("🎉 Phase complete!","success");}
+    }
+    // Sync linked quest — if this milestone has a linkedQuestId, mark quest as complete/incomplete
+    const milestone = phase?.milestones[mIdx];
+    const linkedQid = mLink(milestone);
+    if(linkedQid && saveQuestChecksRef){
+      showToast(next[key]?"🔗 Linked quest updated!":"🔗 Quest unlinked","success");
     }
   };
 
@@ -938,10 +1136,19 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
                       <AgeGuidance phase={phase} dark={dark}/>
                       {phase.milestones.map((m,i)=>{
                         const done=!!checks[`${phase.id}-${i}`];
+                        const text=mText(m);
+                        const linkedQid=mLink(m);
                         return(
-                          <div key={i} onClick={isOwner?()=>{const key=`${phase.id}-${i}`;const next={...checks,[key]:!checks[key]};saveChecks(next);}:undefined} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"9px 0",borderBottom:`1px solid ${t.border}`,cursor:isOwner?"pointer":"default",opacity:done?0.55:1,transition:"opacity 0.2s"}}>
-                            <Check done={done} accent={phase.accent} disabled={!isOwner} onClick={e=>{e.stopPropagation();if(!isOwner)return;const key=`${phase.id}-${i}`;const next={...checks,[key]:!checks[key]};saveChecks(next);}}/>
-                            <div style={{fontFamily:"'Nunito',sans-serif",fontSize:13,color:t.text,lineHeight:1.7,fontWeight:600,textDecoration:done?"line-through":"none",paddingTop:2}}>{m}</div>
+                          <div key={i} onClick={isOwner?()=>toggleCheck(phase.id,i):undefined} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"9px 0",borderBottom:`1px solid ${t.border}`,cursor:isOwner?"pointer":"default",opacity:done?0.55:1,transition:"opacity 0.2s"}}>
+                            <Check done={done} accent={phase.accent} disabled={!isOwner} onClick={e=>{e.stopPropagation();if(isOwner)toggleCheck(phase.id,i);}}/>
+                            <div style={{flex:1}}>
+                              <div style={{fontFamily:"'Nunito',sans-serif",fontSize:13,color:t.text,lineHeight:1.7,fontWeight:600,textDecoration:done?"line-through":"none"}}>{text}</div>
+                              {linkedQid&&(
+                                <span style={{fontFamily:"'Nunito',sans-serif",fontSize:9,fontWeight:800,padding:"1px 7px",borderRadius:99,background:`${phase.accent}18`,color:phase.accent,border:`1px solid ${phase.accent}33`,display:"inline-block",marginTop:2}}>
+                                  🔗 Also a Side Quest
+                                </span>
+                              )}
+                            </div>
                           </div>
                         );
                       })}
@@ -1164,16 +1371,23 @@ function SideQuestsPage({dark,isOwner,showToast,fireConfetti}) {
       const autoStatus=nowDone===0?"Not Started":nowDone===total?"Complete":"In Progress";
       const curStatus=quests.find(q=>q.id===questId)?.status||"Not Started";
       if(autoStatus!==curStatus){
-        const updatedQuests=quests.map(q=>q.id===questId?{...q,status:autoStatus}:q);
-        setQuests(updatedQuests);
-        saveStatuses(updatedQuests,"Quest status auto-updated");
+        const newStatuses = {...questStatuses, [questId]: autoStatus};
+        saveStatuses(newStatuses,"Quest status auto-updated");
       }
       if(nowDone===total){fireConfetti();showToast("⚔️ Quest complete!","success");}
     }
   };
 
-  const categories=["All","Life","Japanese","Tech","Leadership","Japan"];
-  const filtered=quests.filter(q=>filter==="All"||q.category===filter);
+  const categories=["All","Life","Japanese","Japan","Tech","Leadership","Academic","Nintendo"];
+
+  // Sort: pinned first, then by sortAge ascending
+  const sortedQuests = [...quests].sort((a,b)=>{
+    if(a.pinned) return -1;
+    if(b.pinned) return 1;
+    return (a.sortAge||99)-(b.sortAge||99);
+  });
+
+  const filtered=sortedQuests.filter(q=>filter==="All"||q.category===filter);
   const totalMilestones=quests.reduce((s,q)=>s+q.milestones.length,0);
   const doneCount=Object.values(questChecks).filter(Boolean).length;
 
@@ -1221,6 +1435,11 @@ function SideQuestsPage({dark,isOwner,showToast,fireConfetti}) {
                         {isOwner?"⟳ ":""}{quest.status}
                       </span>
                       <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:1}}>{quest.category}</span>
+                      {quest.linkedPhase&&(
+                        <span style={{fontFamily:"'Nunito',sans-serif",fontSize:9,fontWeight:800,padding:"2px 8px",borderRadius:99,background:`${quest.color}18`,color:quest.color,border:`1px solid ${quest.color}44`}}>
+                          🔗 {quest.linkedPhase}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
