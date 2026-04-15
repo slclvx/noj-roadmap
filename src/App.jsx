@@ -537,6 +537,214 @@ function Confetti({active,onDone}) {
   );
 }
 // ─────────────────────────────────────────────────────────────────────────────
+// STREAK & DAILY ACTION HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+const STREAK_MILESTONES = [
+  {days:3,   label:"3 Day Streak",   emoji:"🔥"},
+  {days:7,   label:"1 Week",         emoji:"⚡"},
+  {days:14,  label:"2 Weeks",        emoji:"💪"},
+  {days:30,  label:"1 Month",        emoji:"🏆"},
+  {days:60,  label:"2 Months",       emoji:"🌟"},
+  {days:100, label:"100 Days",       emoji:"💯"},
+  {days:365, label:"1 Year",         emoji:"👑"},
+];
+
+function isDaily(text) {
+  return /daily|every day|each day|per day|30 min/i.test(text);
+}
+
+function todayStr() {
+  return new Date().toISOString().slice(0,10); // YYYY-MM-DD
+}
+
+// Streak tracker component with fire animation
+function StreakCard({streak, lastChecked, milestone, dark, onFire}) {
+  const t=T(dark);
+  const [flames, setFlames] = useState([]);
+  const isToday = lastChecked === todayStr();
+
+  useEffect(()=>{
+    if(onFire){
+      const f=Array.from({length:12},(_,i)=>({
+        id:i, x:30+Math.random()*40,
+        size:14+Math.random()*14,
+        dur:0.6+Math.random()*0.5,
+        delay:i*0.06,
+      }));
+      setFlames(f);
+      setTimeout(()=>setFlames([]),1400);
+    }
+  },[onFire]);
+
+  const reachedMilestone = STREAK_MILESTONES.filter(m=>streak>=m.days);
+  const nextMilestone = STREAK_MILESTONES.find(m=>streak<m.days);
+
+  return(
+    <div style={{position:"relative",overflow:"hidden",marginBottom:16,padding:"16px 18px",background:dark?`rgba(255,140,40,0.1)`:`rgba(255,140,40,0.07)`,border:`2px solid rgba(255,140,40,0.3)`,borderRadius:16}}>
+      {/* Fire particles */}
+      {flames.map(f=>(
+        <div key={f.id} style={{position:"absolute",left:`${f.x}%`,bottom:0,fontSize:f.size,animation:`flamePop ${f.dur}s ease forwards`,animationDelay:`${f.delay}s`,pointerEvents:"none",zIndex:10}}>🔥</div>
+      ))}
+      <div style={{display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
+        <div style={{textAlign:"center",minWidth:60}}>
+          <div style={{fontFamily:"'Fredoka One',cursive",fontSize:36,color:C.orange,lineHeight:1}}>{streak}</div>
+          <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:2,textTransform:"uppercase"}}>day streak</div>
+        </div>
+        <div style={{flex:1}}>
+          <div style={{fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:800,color:t.text,marginBottom:6}}>
+            {streak===0?"Start your streak today! Check off a daily action."
+             :isToday?"✅ Daily actions completed today — keep it up!"
+             :"⚠️ Check off a daily action to keep your streak alive!"}
+          </div>
+          {nextMilestone&&(
+            <div style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:t.sub,fontWeight:600}}>
+              Next milestone: <span style={{color:C.orange,fontWeight:800}}>{nextMilestone.emoji} {nextMilestone.label}</span> — {nextMilestone.days-streak} days away
+            </div>
+          )}
+          {/* Milestone badges */}
+          {reachedMilestone.length>0&&(
+            <div style={{display:"flex",gap:5,flexWrap:"wrap",marginTop:8}}>
+              {reachedMilestone.map(m=>(
+                <span key={m.days} style={{fontFamily:"'Nunito',sans-serif",fontSize:10,fontWeight:800,padding:"2px 9px",borderRadius:99,background:`linear-gradient(135deg,${C.orange},${C.yellow})`,color:"#fff",boxShadow:`0 2px 8px rgba(255,140,0,0.35)`}}>{m.emoji} {m.label}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Age guidance component
+function AgeGuidance({phase, dark}) {
+  const t=T(dark);
+  const today = new Date();
+  const birthYear = 2011; // 14 in 2025
+  const currentAge = today.getFullYear() - birthYear - (today.getMonth() < 8 ? 1 : 0);
+  const [startAge, endAge] = phase.age.split("–").map(a=>parseInt(a)||parseInt(a.replace("+","")));
+  const isOnTrack = currentAge >= startAge && currentAge <= (endAge||startAge+10);
+  const isAhead = currentAge < startAge;
+  const isBehind = endAge && currentAge > endAge;
+
+  return(
+    <div style={{padding:"10px 16px",borderRadius:12,marginBottom:14,display:"flex",alignItems:"center",gap:10,
+      background: isOnTrack?`rgba(61,214,140,0.08)`:isAhead?`rgba(59,140,255,0.08)`:`rgba(255,140,66,0.08)`,
+      border: `1.5px solid ${isOnTrack?C.green:isAhead?C.blue:C.orange}33`
+    }}>
+      <span style={{fontSize:18}}>{isOnTrack?"✅":isAhead?"🚀":"⏰"}</span>
+      <div>
+        <div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,fontWeight:800,color:isOnTrack?C.green:isAhead?C.blue:C.orange}}>
+          {isOnTrack?"You're right on track for this phase"
+           :isAhead?"You're ahead of schedule — great!"
+           :"This phase was meant for an earlier age — catch up!"}
+        </div>
+        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:1,marginTop:2}}>
+          Target age: {phase.age} · Your age: ~{currentAge}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BIRTHDAY COUNTER
+// ─────────────────────────────────────────────────────────────────────────────
+const BIRTHDAY = { month: 10, day: 7, year: 2011 }; // October 7, 2011
+
+function BirthdayCounter({ dark, isOwner, showToast }) {
+  const t = T(dark);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [promptAnswer, setPromptAnswer] = useState("");
+  const [savedAnswer, setSavedAnswer] = useState(() => {
+    try { return localStorage.getItem("noj_birthday_note") || ""; } catch { return ""; }
+  });
+
+  const today = new Date();
+  const age = today.getFullYear() - BIRTHDAY.year
+    - (today.getMonth() + 1 < BIRTHDAY.month || (today.getMonth() + 1 === BIRTHDAY.month && today.getDate() < BIRTHDAY.day) ? 1 : 0);
+
+  const nextBirthday = new Date(today.getFullYear(), BIRTHDAY.month - 1, BIRTHDAY.day);
+  if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+  const daysUntil = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+  const isBirthday = today.getMonth() + 1 === BIRTHDAY.month && today.getDate() === BIRTHDAY.day;
+
+  useEffect(() => {
+    if (isBirthday && isOwner) {
+      const lastPrompt = localStorage.getItem("noj_birthday_prompted");
+      const thisYear = today.getFullYear().toString();
+      if (lastPrompt !== thisYear) setShowPrompt(true);
+    }
+  }, []);
+
+  const saveAnswer = () => {
+    localStorage.setItem("noj_birthday_note", promptAnswer);
+    localStorage.setItem("noj_birthday_prompted", today.getFullYear().toString());
+    setSavedAnswer(promptAnswer);
+    setShowPrompt(false);
+    showToast("Birthday note saved 🎂", "success");
+  };
+
+  return (
+    <>
+      {/* Birthday prompt modal */}
+      {showPrompt && isOwner && (
+        <div style={{ position:"fixed",inset:0,zIndex:999,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(10,15,40,0.7)",backdropFilter:"blur(12px)",padding:20 }}>
+          <div style={{ background:t.card,borderRadius:24,padding:32,maxWidth:480,width:"100%",border:`2px solid ${C.pink}44`,boxShadow:`0 20px 60px ${C.pink}33` }}>
+            <div style={{ fontSize:48,textAlign:"center",marginBottom:12 }}>🎂</div>
+            <div style={{ fontFamily:"'Fredoka One',cursive",fontSize:26,color:C.pink,textAlign:"center",marginBottom:8 }}>Happy Birthday, Sebastian!</div>
+            <div style={{ fontFamily:"'Nunito',sans-serif",fontSize:15,color:t.sub,fontWeight:700,textAlign:"center",marginBottom:20 }}>
+              You're {age} today. How far have you gotten on the NOJ path?
+            </div>
+            <textarea
+              value={promptAnswer}
+              onChange={e => setPromptAnswer(e.target.value)}
+              placeholder="Write a note to your future self about where you are on the path..."
+              style={{ width:"100%",padding:"12px 16px",borderRadius:14,border:`2px solid ${t.border}`,background:t.soft,color:t.text,fontFamily:"'Nunito',sans-serif",fontSize:14,fontWeight:600,outline:"none",resize:"vertical",minHeight:100,marginBottom:14 }}
+            />
+            <div style={{ display:"flex",gap:8 }}>
+              <button onClick={saveAnswer} style={{ flex:1,padding:"12px",borderRadius:14,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${C.pink},${C.purple})`,color:"#fff",fontFamily:"'Fredoka One',cursive",fontSize:18,boxShadow:`0 4px 18px ${C.pink}44` }}>
+                Save Note 🎉
+              </button>
+              <button onClick={() => setShowPrompt(false)} style={{ padding:"12px 18px",borderRadius:14,border:`1.5px solid ${t.border}`,cursor:"pointer",background:"transparent",color:t.mute,fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:800 }}>
+                Later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Birthday card in hero */}
+      <div style={{ display:"inline-flex",alignItems:"center",gap:10,padding:"12px 20px",borderRadius:20,marginBottom:20,
+        background: isBirthday ? `linear-gradient(135deg,${C.pink}22,${C.purple}22)` : dark?`rgba(255,107,181,0.08)`:`rgba(255,107,181,0.06)`,
+        border: `2px solid ${isBirthday?C.pink:C.pink+"33"}`,
+        boxShadow: isBirthday ? `0 4px 20px ${C.pink}44` : "none",
+        flexWrap:"wrap", justifyContent:"center",
+      }}>
+        <span style={{ fontSize:22 }}>{isBirthday ? "🎂" : "🎮"}</span>
+        <div style={{ textAlign:"center" }}>
+          <div style={{ fontFamily:"'Fredoka One',cursive",fontSize:18,color:C.pink,lineHeight:1 }}>
+            {isBirthday ? `Happy ${age}th Birthday!` : `Age ${age}`}
+          </div>
+          <div style={{ fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:t.mute,letterSpacing:1,marginTop:3 }}>
+            {isBirthday ? "🎉 It's your birthday!" : `${daysUntil} days until age ${age + 1} · Oct 7`}
+          </div>
+        </div>
+        {isBirthday && isOwner && (
+          <button onClick={() => setShowPrompt(true)} style={{ padding:"6px 14px",borderRadius:99,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${C.pink},${C.purple})`,color:"#fff",fontFamily:"'Nunito',sans-serif",fontSize:11,fontWeight:800,boxShadow:`0 2px 10px ${C.pink}44` }}>
+            Write a note
+          </button>
+        )}
+        {savedAnswer && (
+          <div style={{ width:"100%",marginTop:8,fontFamily:"'Nunito',sans-serif",fontSize:12,color:t.sub,fontWeight:600,fontStyle:"italic",textAlign:"center" }}>
+            Last note: "{savedAnswer.slice(0,80)}{savedAnswer.length>80?"...":""}"
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
   const t=T(dark);
   const [open,setOpen]=useState(1);
@@ -544,12 +752,68 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
 
   const {state:phaseStatus,save:saveStatus,updatedAt:statusTs} = useLiveState("phase_status",{},isOwner);
   const {state:checks,save:saveChecks,updatedAt:checksTs,syncing} = useLiveState("phase_checks",{},isOwner);
+  const {state:actionChecks,save:saveActionChecks} = useLiveState("action_checks",{},isOwner);
+  const {state:streakData,save:saveStreakData} = useLiveState("streak_data",{streak:0,lastChecked:"",lastFireDay:""},isOwner);
+
+  const [fireTrigger, setFireTrigger] = useState(false);
 
   const totalMilestones=PHASES.reduce((s,p)=>s+p.milestones.length,0);
   const doneCount=Object.values(checks).filter(Boolean).length;
 
-  const toggle=(id)=>{
-    setOpen(p=>p===id?null:id);setTab("milestones");
+  // Check daily action — updates streak
+  const checkDailyAction = (nextActionChecks) => {
+    if(!isOwner) return;
+    const today = todayStr();
+    if(streakData.lastChecked === today) return; // already counted today
+    // Count if any daily action was just checked today
+    const hasDailyChecked = Object.entries(nextActionChecks).some(([k,v])=>{
+      if(!v) return false;
+      const [phaseId,aIdx] = k.split("-a");
+      const phase = PHASES.find(p=>p.id===parseInt(phaseId));
+      return phase && isDaily(phase.actions[parseInt(aIdx)]);
+    });
+    if(!hasDailyChecked) return;
+    const yesterday = new Date();yesterday.setDate(yesterday.getDate()-1);
+    const yesterdayStr = yesterday.toISOString().slice(0,10);
+    const newStreak = streakData.lastChecked===yesterdayStr ? streakData.streak+1 : 1;
+    const hitMilestone = STREAK_MILESTONES.some(m=>newStreak===m.days);
+    const newData = {...streakData, streak:newStreak, lastChecked:today};
+    saveStreakData(newData);
+    if(hitMilestone) { setFireTrigger(t=>!t); showToast(`🔥 ${newStreak} day streak milestone!`,"success"); }
+    else if(newStreak > 1) showToast(`🔥 Day ${newStreak} streak!`,"success");
+  };
+
+  // Reset daily actions at midnight
+  useEffect(()=>{
+    if(!isOwner) return;
+    const today = todayStr();
+    const lastReset = localStorage.getItem("noj_daily_reset");
+    if(lastReset !== today) {
+      // Reset only daily action keys
+      const next = {};
+      Object.entries(actionChecks).forEach(([k,v])=>{
+        const [phaseId,aIdx] = k.split("-a");
+        const phase = PHASES.find(p=>p.id===parseInt(phaseId));
+        const isD = phase && isDaily(phase.actions[parseInt(aIdx)]);
+        if(!isD) next[k] = v; // keep non-daily checks
+      });
+      saveActionChecks(next);
+      localStorage.setItem("noj_daily_reset", today);
+    }
+  },[]);
+
+  const toggleAction = (phaseId, aIdx) => {
+    if(!isOwner) return;
+    const key = `${phaseId}-a${aIdx}`;
+    const next = {...actionChecks, [key]:!actionChecks[key]};
+    saveActionChecks(next, "Action checked off");
+    if(next[key]) checkDailyAction(next);
+    showToast(next[key]?"Action done ✓":"Unchecked","success");
+  };
+
+  const toggle=(id,forceOpen=false)=>{
+    setOpen(p=>(forceOpen||p!==id)?id:null);
+    setTab("milestones");
     setTimeout(()=>{const el=document.getElementById(`p${id}`);if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-74,behavior:"smooth"});},50);
   };
 
@@ -566,11 +830,17 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
     const key=`${phaseId}-${mIdx}`;
     const next={...checks,[key]:!checks[key]};
     saveChecks(next,"Milestone checked off");
-    // Fire confetti if this completes the phase
+    // Auto-update phase status based on completion
     const phase=PHASES.find(p=>p.id===phaseId);
     if(phase){
       const nowDone=phase.milestones.filter((_,i)=>next[`${phaseId}-${i}`]).length;
-      if(nowDone===phase.milestones.length)fireConfetti();
+      const total=phase.milestones.length;
+      const autoStatus = nowDone===0?"Not Started":nowDone===total?"Complete":"In Progress";
+      const curStatus = phaseStatus[phaseId]||"Not Started";
+      if(autoStatus!==curStatus){
+        saveStatus({...phaseStatus,[phaseId]:autoStatus});
+      }
+      if(nowDone===total){fireConfetti();showToast("🎉 Phase complete!","success");}
     }
   };
 
@@ -586,6 +856,7 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
         <p style={{fontFamily:"'Nunito',sans-serif",fontSize:15,color:t.sub,fontWeight:600,lineHeight:1.8,maxWidth:460,margin:"0 auto 24px"}}>
           My roadmap to becoming the first foreign CEO of Nintendo.<br/>Inspired by Satoru Iwata. Built by sebastianosky.
         </p>
+        <BirthdayCounter dark={dark} isOwner={isOwner} showToast={showToast}/>
         <div className="noj-stat-cards" style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:20}}>
           <StatCard value="7"   label="Phases" color={C.blue}   dark={dark}/>
           <StatCard value="~25" label="Years"  color={C.teal}   dark={dark}/>
@@ -605,7 +876,7 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
         <div style={{display:"flex",alignItems:"center",minWidth:520}}>
           {PHASES.map((p,i)=>(
             <div key={p.id} style={{display:"flex",alignItems:"center",flex:i<PHASES.length-1?1:0}}>
-              <button onClick={()=>toggle(p.id)} style={{width:open===p.id?48:34,height:open===p.id?48:34,borderRadius:"50%",border:`3px solid ${open===p.id?p.accent:t.border}`,background:open===p.id?`linear-gradient(135deg,${p.accent},${p.accent}cc)`:t.card,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",flexShrink:0,outline:"none",transition:"all 0.25s cubic-bezier(0.34,1.56,0.64,1)",boxShadow:open===p.id?`0 4px 20px ${p.accent}55`:t.shadowS,fontSize:open===p.id?21:15}}>
+              <button onClick={()=>toggle(p.id,true)} style={{width:open===p.id?48:34,height:open===p.id?48:34,borderRadius:"50%",border:`3px solid ${open===p.id?p.accent:t.border}`,background:open===p.id?`linear-gradient(135deg,${p.accent},${p.accent}cc)`:t.card,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",flexShrink:0,outline:"none",transition:"all 0.25s cubic-bezier(0.34,1.56,0.64,1)",boxShadow:open===p.id?`0 4px 20px ${p.accent}55`:t.shadowS,fontSize:open===p.id?21:15}}>
                 {p.emoji}
               </button>
               {i<PHASES.length-1&&<div style={{flex:1,height:3,minWidth:8,borderRadius:99,background:i<PHASES.findIndex(x=>x.id===open)?`linear-gradient(to right,${PHASES[i].accent},${PHASES[i+1].accent})`:t.border,transition:"background 0.4s"}}/>}
@@ -664,6 +935,7 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
 
                   {tab==="milestones"&&(
                     <div>
+                      <AgeGuidance phase={phase} dark={dark}/>
                       {phase.milestones.map((m,i)=>{
                         const done=!!checks[`${phase.id}-${i}`];
                         return(
@@ -682,12 +954,45 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
                     </div>
                   )}
                   {tab==="actions"&&(
-                    <div>{phase.actions.map((a,i)=>(
-                      <div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"8px 0",borderBottom:`1px solid ${t.border}`}}>
-                        <div style={{fontFamily:"'Fredoka One',cursive",fontSize:17,color:phase.accent,minWidth:20,marginTop:1,lineHeight:1.3}}>→</div>
-                        <div style={{fontFamily:"'Nunito',sans-serif",fontSize:13,color:t.text,lineHeight:1.7,fontWeight:600}}>{a}</div>
+                    <div>
+                      {/* Streak card — only show on phases with daily actions */}
+                      {phase.actions.some(a=>isDaily(a))&&isOwner&&(
+                        <StreakCard
+                          streak={streakData.streak||0}
+                          lastChecked={streakData.lastChecked}
+                          dark={dark}
+                          onFire={fireTrigger}
+                        />
+                      )}
+                      {phase.actions.map((a,i)=>{
+                        const key=`${phase.id}-a${i}`;
+                        const done=!!actionChecks[key];
+                        const daily=isDaily(a);
+                        return(
+                          <div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"9px 0",borderBottom:`1px solid ${t.border}`,opacity:done?0.5:1,transition:"opacity 0.2s"}}>
+                            <Check
+                              done={done}
+                              accent={daily?C.orange:phase.accent}
+                              disabled={!isOwner}
+                              onClick={e=>{e.stopPropagation();toggleAction(phase.id,i);}}
+                            />
+                            <div style={{flex:1}}>
+                              <div style={{fontFamily:"'Nunito',sans-serif",fontSize:13,color:t.text,lineHeight:1.7,fontWeight:600,textDecoration:done?"line-through":"none"}}>{a}</div>
+                              {daily&&(
+                                <span style={{fontFamily:"'Nunito',sans-serif",fontSize:9,fontWeight:800,padding:"1px 8px",borderRadius:99,background:`${C.orange}18`,color:C.orange,border:`1px solid ${C.orange}44`,display:"inline-block",marginTop:3}}>🔄 Resets daily</span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <div style={{marginTop:12}}>
+                        <ProgressBar
+                          value={phase.actions.filter((_,i)=>actionChecks[`${phase.id}-a${i}`]).length}
+                          total={phase.actions.length}
+                          color={phase.accent}
+                        />
                       </div>
-                    ))}</div>
+                    </div>
                   )}
                   {tab==="honest"&&(
                     <div style={{display:"flex",flexDirection:"column",gap:12,paddingTop:4}}>
@@ -851,11 +1156,19 @@ function SideQuestsPage({dark,isOwner,showToast,fireConfetti}) {
     const key=`${questId}-${mIdx}`;
     const next={...questChecks,[key]:!questChecks[key]};
     saveQuestChecks(next,"Quest milestone checked");
-    // Confetti if all milestones done
+    // Auto-update quest status based on completion
     const quest=DEFAULT_QUESTS.find(q=>q.id===questId);
     if(quest){
-      const allDone=quest.milestones.every((_,i)=>next[`${questId}-${i}`]);
-      if(allDone)fireConfetti();
+      const nowDone=quest.milestones.filter((_,i)=>next[`${questId}-${i}`]).length;
+      const total=quest.milestones.length;
+      const autoStatus=nowDone===0?"Not Started":nowDone===total?"Complete":"In Progress";
+      const curStatus=quests.find(q=>q.id===questId)?.status||"Not Started";
+      if(autoStatus!==curStatus){
+        const updatedQuests=quests.map(q=>q.id===questId?{...q,status:autoStatus}:q);
+        setQuests(updatedQuests);
+        saveStatuses(updatedQuests,"Quest status auto-updated");
+      }
+      if(nowDone===total){fireConfetti();showToast("⚔️ Quest complete!","success");}
     }
   };
 
@@ -1006,6 +1319,7 @@ export default function App() {
         @keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
         @keyframes confettiPop{0%{opacity:1;transform:translateX(0) translateY(0) rotate(0deg);}100%{opacity:0;transform:translateX(var(--dx,80px)) translateY(var(--dy,-100px)) rotate(360deg);}}
         @keyframes slideDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+        @keyframes flamePop{0%{opacity:1;transform:translateY(0) scale(1);}100%{opacity:0;transform:translateY(-70px) scale(0.2);}}
         button{font-family:inherit;outline:none;-webkit-tap-highlight-color:transparent;}
         input,textarea{outline:none;font-family:inherit;}
         ::-webkit-scrollbar{width:5px;height:5px;}
