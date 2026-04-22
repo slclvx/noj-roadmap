@@ -51,11 +51,16 @@ const C = {
   red:"#FF5C75", orange:"#FF8C42", yellow:"#FFC844",
   green:"#3DD68C", teal:"#00C8A8", blue:"#3B8CFF",
   sky:"#5CD3FF", purple:"#9B6BFF", pink:"#FF6BB5",
-  bg:"#F0F2FF", card:"#FFFFFF", soft:"#E8ECFF",
-  border:"rgba(140,150,240,0.15)", borderM:"rgba(140,150,240,0.28)",
+  // iiSU-inspired: soft lavender → mint gradient backgrounds
+  bg:"#EEF1FF", bg2:"#F5F0FF", bg3:"#EEF9FF",
+  card:"#FFFFFF", soft:"#F2F4FF",
+  border:"rgba(140,150,240,0.12)", borderM:"rgba(140,150,240,0.22)",
+  borderH:"rgba(255,255,255,0.9)", // white inner border for card pop
   text:"#1A1D3A", sub:"#4A4E80", mute:"#9A9EC8",
-  dBg:"#0C0F1E", dCard:"#141828", dSoft:"#1A1F35",
-  dBorder:"rgba(140,160,255,0.1)", dBorderM:"rgba(140,160,255,0.22)",
+  dBg:"#0A0D1A", dBg2:"#0D101E", dBg3:"#0B0F22",
+  dCard:"#161A2C", dSoft:"#1A1F35",
+  dBorder:"rgba(140,160,255,0.08)", dBorderM:"rgba(140,160,255,0.18)",
+  dBorderH:"rgba(255,255,255,0.05)",
   dText:"#EEEEFF", dSub:"#8890C8", dMute:"#353A60",
 };
 
@@ -63,12 +68,19 @@ function T(dark) {
   return {
     bg:     dark?C.dBg:C.bg,      card:   dark?C.dCard:C.card,
     soft:   dark?C.dSoft:C.soft,  border: dark?C.dBorder:C.border,
-    borderM:dark?C.dBorderM:C.borderM, text:dark?C.dText:C.text,
+    borderM:dark?C.dBorderM:C.borderM, borderH:dark?C.dBorderH:C.borderH,
+    text:dark?C.dText:C.text,
     sub:    dark?C.dSub:C.sub,    mute:   dark?C.dMute:C.mute,
-    nav:    dark?"rgba(12,15,30,0.97)":"rgba(240,242,255,0.97)",
-    shadow: dark?"0 6px 32px rgba(0,0,0,0.55)":"0 6px 32px rgba(120,130,255,0.13)",
-    shadowS:dark?"0 2px 12px rgba(0,0,0,0.4)":"0 2px 12px rgba(120,130,255,0.1)",
-    pill:   dark?"rgba(255,255,255,0.07)":"rgba(120,130,240,0.09)",
+    nav:    dark?"rgba(10,13,26,0.85)":"rgba(255,255,255,0.75)",
+    // iiSU-style soft floating shadows with color glow
+    shadow: dark?"0 10px 40px rgba(0,0,0,0.55),0 2px 8px rgba(0,0,0,0.4)":"0 10px 40px rgba(140,150,240,0.18),0 2px 8px rgba(120,130,255,0.08)",
+    shadowS:dark?"0 4px 16px rgba(0,0,0,0.4)":"0 4px 16px rgba(140,150,240,0.12)",
+    shadowL:dark?"0 20px 60px rgba(0,0,0,0.6)":"0 20px 60px rgba(140,150,240,0.25)",
+    pill:   dark?"rgba(255,255,255,0.06)":"rgba(120,130,240,0.07)",
+    // Pastel gradient for body background
+    bodyBg: dark
+      ? `radial-gradient(ellipse at top left, ${C.dBg2} 0%, ${C.dBg} 50%, ${C.dBg3} 100%)`
+      : `radial-gradient(ellipse at top left, ${C.bg2} 0%, ${C.bg} 50%, ${C.bg3} 100%)`,
   };
 }
 
@@ -213,49 +225,66 @@ PHASES.forEach(phase => {
 
 
 const BOOK_PHASES = [
-  {id:1,label:"PHASE 1",title:"FOUNDATION IDENTITY",age:"14–15",accent:C.green,focus:["Become like Satoru Iwata internally","Start Japanese basics","Build programming mindset"],books:[
-    {num:1,title:"Ask Iwata",sub:"Satoru Iwata",type:"🎯 Core",note:"Sets the 'why' before everything else. I read this first. Then again."},
-    {num:2,title:"Atomic Habits",sub:"James Clear",type:"🧠 Mindset",note:"My system for every other habit on this list."},
-    {num:3,title:"Genki I + Workbook",sub:"Eri Banno et al.",type:"🇯🇵 Japanese",note:"The gold standard starting point. No skipping."},
-    {num:4,title:"Hello World",sub:"Hannah Fry",type:"💻 Tech",note:"Builds CS intuition before I need deep coding experience.",isNew:true},
-    {num:5,title:"The Pragmatic Programmer",sub:"Hunt & Thomas",type:"💻 Tech",note:"How to think like a craftsman, not just a coder."},
+  {id:1,label:"PHASE 1",title:"FOUNDATION IDENTITY",age:"14–15",accent:C.green,focus:["Become like Satoru Iwata internally","Japanese basics (N5 prep)","Build programming mindset"],books:[
+    {num:1, title:"Ask Iwata",sub:"Satoru Iwata",type:"🎯 Core",note:"Sets the 'why' before everything else. I read this first. Then again."},
+    {num:2, title:"Atomic Habits",sub:"James Clear",type:"🧠 Mindset",note:"My system for every other habit on this list."},
+    {num:3, title:"Genki I + Workbook",sub:"Eri Banno et al.",type:"🇯🇵 Japanese",note:"The gold standard for English speakers. Clear grammar explanations. No skipping.",level:"N5"},
+    {num:4, title:"Minna no Nihongo Shokyu I",sub:"3A Corporation",type:"🇯🇵 Japanese",note:"The textbook Japanese language schools actually use. Immersion-based, main text in Japanese. Use alongside Genki for twice the exposure.",level:"N5",isNew:true},
+    {num:5, title:"Remembering the Kanji I",sub:"James Heisig",type:"🇯🇵 Japanese",note:"Meaning-first kanji system. Controversial but fast. Get through all 2,200 common kanji meanings before worrying about readings.",level:"N5→N3",isNew:true},
+    {num:6, title:"Hello World",sub:"Hannah Fry",type:"💻 Tech",note:"Builds CS intuition before I need deep coding experience."},
+    {num:7, title:"The Pragmatic Programmer",sub:"Hunt & Thomas",type:"💻 Tech",note:"How to think like a craftsman, not just a coder."},
+    {num:8, title:"The Personal MBA",sub:"Josh Kaufman",type:"👑 Leadership",note:"Replaces a business class. Covers value creation, marketing, systems thinking — all of it.",isNew:true},
   ]},
-  {id:2,label:"PHASE 2",title:"FOUNDATION STRENGTH",age:"15–16",accent:C.sky,focus:["Strengthen mindset","Complete beginner Japanese","Build cultural awareness"],books:[
-    {num:6,title:"Genki II + Workbook",sub:"Eri Banno et al.",type:"🇯🇵 Japanese",note:"Finishing what I started. No skipping."},
-    {num:7,title:"The Courage to Be Disliked",sub:"Kishimi & Koga",type:"🧠 Mindset",note:"Adlerian psychology written as a Japanese dialogue."},
-    {num:8,title:"The Japanese Mind",sub:"Roger Davies & Osamu Ikeno",type:"🇯🇵 Culture",note:"Essays on Japanese concepts — nemawashi, wa, amae."},
-    {num:9,title:"A Dictionary of Basic Japanese Grammar",sub:"Seiichi Makino",type:"🇯🇵 Japanese",note:"Not a book I read — a reference I use constantly.",isNew:true},
+  {id:2,label:"PHASE 2",title:"FOUNDATION STRENGTH + COMMUNICATION",age:"15–17",accent:C.sky,focus:["Strengthen mindset","Finish N4 level","Build communication skills"],books:[
+    {num:9, title:"Genki II + Workbook",sub:"Eri Banno et al.",type:"🇯🇵 Japanese",note:"Finishing what I started. Gets you to N4.",level:"N4"},
+    {num:10,title:"Minna no Nihongo Shokyu II",sub:"3A Corporation",type:"🇯🇵 Japanese",note:"The second half of the Japanese-school track. Pairs with Genki II.",level:"N4",isNew:true},
+    {num:11,title:"A Dictionary of Basic Japanese Grammar",sub:"Seiichi Makino",type:"🇯🇵 Japanese",note:"Essential desk reference. Not read cover to cover — used constantly.",level:"Ref"},
+    {num:12,title:"Basic Kanji Book Vol 1 & 2",sub:"Chieko Kano",type:"🇯🇵 Japanese",note:"Stroke-order and usage-focused kanji learning. Alternative or supplement to Heisig — use whichever sticks.",level:"N5-N4",isNew:true},
+    {num:13,title:"The Courage to Be Disliked",sub:"Kishimi & Koga",type:"🧠 Mindset",note:"Adlerian psychology written as a Japanese dialogue."},
+    {num:14,title:"The Japanese Mind",sub:"Roger Davies & Osamu Ikeno",type:"🇯🇵 Culture",note:"Essays on Japanese concepts — nemawashi, wa, amae."},
+    {num:15,title:"How to Win Friends and Influence People",sub:"Dale Carnegie",type:"👑 Leadership",note:"Old book, still unfairly powerful. Communication is a leadership skill.",isNew:true},
+    {num:16,title:"Blood, Sweat, and Pixels",sub:"Jason Schreier",type:"🎮 Design",note:"Real stories of how games actually get made. Pairs with Game Over.",isNew:true},
   ]},
-  {id:3,label:"PHASE 3",title:"NINTENDO THINKING + LEADERSHIP",age:"16–18",accent:C.orange,focus:["Think like Nintendo","Understand game design philosophy","Develop leadership mindset"],books:[
-    {num:10,title:"The Art of Game Design: A Book of Lenses",sub:"Jesse Schell",type:"🎮 Design",note:"The best book on what 'fun' actually means. Iwata lived this."},
-    {num:11,title:"A Theory of Fun for Game Design",sub:"Raph Koster",type:"🎮 Design",note:"Short, essential. Pairs perfectly with Schell."},
-    {num:12,title:"Game Over: How Nintendo Conquered the World",sub:"David Sheff",type:"🎯 Core",note:"The definitive Nintendo history. Read it like a business case study."},
-    {num:13,title:"Disrupting the Game",sub:"Reggie Fils-Aimé",type:"🎯 Core",note:"Reggie's path from outsider to Nintendo's face is my blueprint."},
-    {num:14,title:"The Anatomy of Japanese Business",sub:"Kae Chaudhuri",type:"🇯🇵 Culture",note:"How Japanese companies actually operate internally.",isNew:true},
-    {num:15,title:"Multipliers",sub:"Liz Wiseman",type:"👑 Leadership",note:"Iwata made everyone around him smarter. This book explains how.",isNew:true},
+  {id:3,label:"PHASE 3",title:"NINTENDO THINKING + N3 BRIDGE",age:"16–18",accent:C.orange,focus:["Think like Nintendo","Game design philosophy","Bridge to intermediate Japanese"],books:[
+    {num:17,title:"Tobira: Gateway to Advanced Japanese",sub:"Mayumi Oka et al.",type:"🇯🇵 Japanese",note:"The bridge from beginner to intermediate. The N3 leap most learners skip — I don't.",level:"N3"},
+    {num:18,title:"Quartet I & II",sub:"The Japan Times",type:"🇯🇵 Japanese",note:"Published by Genki's company. Designed to follow Genki II straight into N3/N2. More natural Japanese than Tobira.",level:"N3→N2",isNew:true},
+    {num:19,title:"A Dictionary of Intermediate Japanese Grammar",sub:"Seiichi Makino",type:"🇯🇵 Japanese",note:"The intermediate companion to the basic grammar dictionary. Essential at this stage.",level:"Ref",isNew:true},
+    {num:20,title:"The Art of Game Design: A Book of Lenses",sub:"Jesse Schell",type:"🎮 Design",note:"The best book on what 'fun' actually means. Iwata lived this."},
+    {num:21,title:"A Theory of Fun for Game Design",sub:"Raph Koster",type:"🎮 Design",note:"Short, essential. Pairs perfectly with Schell."},
+    {num:22,title:"Game Over: How Nintendo Conquered the World",sub:"David Sheff",type:"🎯 Core",note:"The definitive Nintendo history. Read it like a business case study."},
+    {num:23,title:"Disrupting the Game",sub:"Reggie Fils-Aimé",type:"🎯 Core",note:"Reggie's path from outsider to Nintendo's face is my blueprint."},
+    {num:24,title:"The Anatomy of Japanese Business",sub:"Kae Chaudhuri",type:"🇯🇵 Culture",note:"How Japanese companies actually operate internally."},
+    {num:25,title:"Multipliers",sub:"Liz Wiseman",type:"👑 Leadership",note:"Iwata made everyone around him smarter. This book explains how."},
   ]},
-  {id:4,label:"PHASE 4",title:"REAL JAPANESE",age:"17–20",accent:C.purple,focus:["Transition to real Japanese","Close the intermediate gap","Build reading + comprehension"],books:[
-    {num:16,title:"Tobira: Gateway to Advanced Japanese",sub:"Mayumi Oka et al.",type:"🇯🇵 Japanese",note:"The bridge most learners skip. I don't."},
-    {num:17,title:"Shin Kanzen Master N2 Series",sub:"Various",type:"🇯🇵 Japanese",note:"Grammar, reading, listening, vocab. All volumes."},
-    {num:18,title:"Japanese for Busy People III",sub:"AJALT",type:"🇯🇵 Japanese",note:"Bridges conversational Japanese toward professional registers.",isNew:true},
-    {num:19,title:"Japan's Software Factories",sub:"Michael Cusumano",type:"🇯🇵 Culture",note:"How Japanese tech companies build software differently.",isNew:true},
+  {id:4,label:"PHASE 4",title:"N2 & STANFORD PREP",age:"17–20",accent:C.purple,focus:["Serious JLPT test prep","Stanford-level communication","Business Japanese onramp"],books:[
+    {num:26,title:"Shin Kanzen Master N2 Series",sub:"3A Corporation",type:"🇯🇵 Japanese",note:"THE best for serious test prep. Rigorous grammar, high-difficulty practice. All volumes — grammar, reading, listening, vocab.",level:"N2"},
+    {num:27,title:"Nihongo So-Matome N2",sub:"ASK Publishing",type:"🇯🇵 Japanese",note:"6–8 week daily-schedule drill book. Good for time-limited review alongside Shin Kanzen.",level:"N2",isNew:true},
+    {num:28,title:"TRY! Japanese N2",sub:"ASK Publishing",type:"🇯🇵 Japanese",note:"Integrates grammar through reading passages. More textbook-feel than pure drills — good for context.",level:"N2",isNew:true},
+    {num:29,title:"Japan's Software Factories",sub:"Michael Cusumano",type:"🇯🇵 Culture",note:"How Japanese tech companies build software differently."},
+    {num:30,title:"Made to Stick",sub:"Chip Heath & Dan Heath",type:"👑 Leadership",note:"Why some ideas survive and others die. Useful for pitching projects and Stanford applications.",isNew:true},
+    {num:31,title:"Talk Like TED",sub:"Carmine Gallo",type:"👑 Leadership",note:"Storytelling and public speaking. Pairs directly with the Give a Public Talk side quest.",isNew:true},
   ]},
-  {id:5,label:"PHASE 5",title:"IWATA-LEVEL PROGRAMMER",age:"18–22",accent:C.red,focus:["Deep technical mastery","Become a problem solver under pressure","Build serious credibility"],books:[
-    {num:20,title:"Grokking Algorithms",sub:"Aditya Bhargava",type:"💻 Tech",note:"Starting here — visual, builds mental models for everything above it."},
-    {num:21,title:"Clean Code",sub:"Robert C. Martin",type:"💻 Tech",note:"Practical foundation first. I'll feel every page after real messy code."},
-    {num:22,title:"Refactoring",sub:"Martin Fowler",type:"💻 Tech",note:"The Iwata skill — making broken systems better without breaking them."},
-    {num:23,title:"Design Patterns",sub:"Gang of Four",type:"💻 Tech",note:"Architecture thinking. Need Clean Code and Refactoring first."},
-    {num:24,title:"A Philosophy of Software Design",sub:"John Ousterhout",type:"💻 Tech",note:"Bridges everything into SICP.",isNew:true},
-    {num:25,title:"Structure and Interpretation of Computer Programs",sub:"Abelson & Sussman",type:"💻 Tech",note:"Last for a reason. SICP too early = brain shutdown. This is the summit."},
+  {id:5,label:"PHASE 5",title:"STANFORD — PROGRAMMER + FOUNDER THINKING",age:"18–22",accent:C.red,focus:["Deep technical mastery","Founder-level thinking","Serious credibility"],books:[
+    {num:32,title:"The Lean Startup",sub:"Eric Ries",type:"👑 Leadership",note:"Build fast, test fast, don't guess. Directly applicable to Stanford projects and internships.",isNew:true},
+    {num:33,title:"Zero to One",sub:"Peter Thiel",type:"👑 Leadership",note:"CEO-level thinking — how to see what others miss. The Stanford mindset shift.",isNew:true},
+    {num:34,title:"Grokking Algorithms",sub:"Aditya Bhargava",type:"💻 Tech",note:"Visual, builds mental models for everything above it. Start here."},
+    {num:35,title:"Clean Code",sub:"Robert C. Martin",type:"💻 Tech",note:"Practical foundation. I'll feel every page after real messy code."},
+    {num:36,title:"Refactoring",sub:"Martin Fowler",type:"💻 Tech",note:"The Iwata skill — making broken systems better without breaking them."},
+    {num:37,title:"Design Patterns",sub:"Gang of Four",type:"💻 Tech",note:"Architecture thinking. Need Clean Code and Refactoring first."},
+    {num:38,title:"A Philosophy of Software Design",sub:"John Ousterhout",type:"💻 Tech",note:"Bridges everything into SICP."},
+    {num:39,title:"Structure and Interpretation of Computer Programs",sub:"Abelson & Sussman",type:"💻 Tech",note:"Last for a reason. SICP too early = brain shutdown. This is the summit."},
   ]},
-  {id:6,label:"PHASE 6",title:"EXECUTIVE LEVEL",age:"22+",accent:C.yellow,focus:["Executive communication","Cultural mastery — deep, not surface","Leadership at scale"],books:[
-    {num:26,title:"Shin Kanzen Master N1 Series",sub:"Various",type:"🇯🇵 Japanese",note:"The summit of formal Japanese study."},
-    {num:27,title:"Business Japanese",sub:"Mitsubishi Corporation",type:"🇯🇵 Japanese",note:"Real corporate Japanese from people who live it."},
-    {num:28,title:"Keigo Training Workbook",sub:"Various",type:"🇯🇵 Japanese",note:"Honorific language is not optional in Japanese executive culture."},
-    {num:29,title:"The Culture Map",sub:"Erin Meyer",type:"🌏 Culture",note:"Essential for navigating Japan ↔ America."},
-    {num:30,title:"Never Split the Difference",sub:"Chris Voss",type:"👑 Leadership",note:"I will negotiate budgets, teams, and direction as an executive.",isNew:true},
-    {num:31,title:"The Ride of a Lifetime",sub:"Robert Iger",type:"👑 Leadership",note:"The closest real-world path to mine.",isNew:true},
-    {num:32,title:"An Introduction to Japanese Society",sub:"Yoshio Sugimoto",type:"🇯🇵 Culture",note:"Understanding the social structure I'm operating inside.",isNew:true},
+  {id:6,label:"PHASE 6",title:"EXECUTIVE LEVEL — N1 & BEYOND",age:"22+",accent:C.yellow,focus:["N1 mastery","Executive communication","Cultural mastery — deep"],books:[
+    {num:40,title:"Shin Kanzen Master N1 Series",sub:"3A Corporation",type:"🇯🇵 Japanese",note:"The summit of formal Japanese study. All volumes.",level:"N1"},
+    {num:41,title:"Nihongo 500 Mon N1",sub:"ASK Publishing",type:"🇯🇵 Japanese",note:"Daily drills — kanji, vocab, grammar in one book. Keep sharpness post-N1.",level:"N1",isNew:true},
+    {num:42,title:"A Dictionary of Advanced Japanese Grammar",sub:"Seiichi Makino",type:"🇯🇵 Japanese",note:"The final volume of the grammar dictionary series. Reference for life.",level:"Ref",isNew:true},
+    {num:43,title:"Business Japanese",sub:"Mitsubishi Corporation",type:"🇯🇵 Japanese",note:"Real corporate Japanese from people who live it."},
+    {num:44,title:"Keigo Training Workbook",sub:"Various",type:"🇯🇵 Japanese",note:"Honorific language is not optional in Japanese executive culture."},
+    {num:45,title:"The Culture Map",sub:"Erin Meyer",type:"🌏 Culture",note:"Essential for navigating Japan ↔ America."},
+    {num:46,title:"Never Split the Difference",sub:"Chris Voss",type:"👑 Leadership",note:"I will negotiate budgets, teams, and direction as an executive."},
+    {num:47,title:"The Ride of a Lifetime",sub:"Robert Iger",type:"👑 Leadership",note:"The closest real-world path to mine."},
+    {num:48,title:"An Introduction to Japanese Society",sub:"Yoshio Sugimoto",type:"🇯🇵 Culture",note:"Understanding the social structure I'm operating inside."},
+    {num:49,title:"Creativity, Inc.",sub:"Ed Catmull",type:"🎯 Core",note:"Pixar's creative leadership model — the closest Western equivalent to Nintendo's internal culture.",isNew:true},
   ]},
 ];
 
@@ -473,12 +502,31 @@ function TypeBadge({type,dark}) {
   const m=TYPE_META[type]||TYPE_META["💻 Tech"];
   return <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,fontWeight:700,padding:"3px 9px",borderRadius:99,background:dark?m.dBg:m.lBg,color:dark?m.dTx:m.lTx,border:dark?"none":`1.5px solid ${m.lBd}`,whiteSpace:"nowrap"}}>{type}</span>;
 }
+function LevelBadge({level,dark}){
+  if(!level)return null;
+  const colors={
+    "N5":C.green,"N4":C.teal,"N3":C.orange,"N2":C.red,"N1":C.purple,
+    "N5-N4":C.teal,"N5→N3":C.orange,"N3→N2":C.red,"N2→N1":C.purple,"Ref":C.mute
+  };
+  const col=colors[level]||C.blue;
+  return <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,fontWeight:800,padding:"3px 9px",borderRadius:99,background:dark?`${col}22`:`${col}12`,color:col,border:`1.5px solid ${col}55`,whiteSpace:"nowrap",letterSpacing:0.5}}>JLPT {level}</span>;
+}
 function NewBadge(){return <span style={{fontFamily:"'Nunito',sans-serif",fontSize:9,fontWeight:900,padding:"2px 9px",borderRadius:99,background:"linear-gradient(135deg,#FFB800,#FF7828)",color:"#fff",boxShadow:"0 2px 6px rgba(255,120,0,0.4)"}}>✦ NEW</span>;}
 
 function StatCard({value,label,color,dark}){
   return(
-    <div className="noj-stat-card" style={{padding:"14px 22px",borderRadius:22,textAlign:"center",background:dark?`${color}18`:`${color}14`,border:`2.5px solid ${color}50`,boxShadow:`0 4px 20px ${color}25`,minWidth:90}}>
-      <div className="val" style={{fontFamily:"'Fredoka One',cursive",fontSize:30,color,lineHeight:1}}>{value}</div>
+    <div className="noj-stat-card" style={{
+      padding:"16px 24px",
+      borderRadius:24,
+      textAlign:"center",
+      background:dark?`linear-gradient(145deg,${color}22,${color}0f)`:`linear-gradient(145deg,#fff,${color}10)`,
+      border:`3px solid ${dark?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.8)"}`,
+      boxShadow:dark?`0 8px 28px ${color}20, inset 0 1px 0 rgba(255,255,255,0.05)`:`0 8px 28px ${color}25, inset 0 1px 0 rgba(255,255,255,0.7)`,
+      minWidth:94,
+      position:"relative",
+      overflow:"hidden"
+    }}>
+      <div className="val" style={{fontFamily:"'Fredoka One',cursive",fontSize:32,color,lineHeight:1,textShadow:`0 2px 8px ${color}33`}}>{value}</div>
       <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,color:`${color}99`,letterSpacing:2,textTransform:"uppercase",marginTop:5}}>{label}</div>
     </div>
   );
@@ -491,7 +539,27 @@ function Pill({label,active,color,onClick,dark,small}){
 
 function Card({children,style={},accent,dark,onClick}){
   const t=T(dark);const[hov,setHov]=useState(false);
-  return <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} style={{background:t.card,borderRadius:24,border:`2.5px solid ${hov&&accent?`${accent}88`:t.border}`,boxShadow:hov?`0 12px 40px ${accent||C.blue}28,0 2px 8px rgba(0,0,0,0.06)`:t.shadowS,transition:"all 0.22s ease",transform:hov&&onClick?"translateY(-3px)":"none",cursor:onClick?"pointer":"default",overflow:"hidden",...style}}>{children}</div>;
+  return <div
+    onClick={onClick}
+    onMouseEnter={()=>setHov(true)}
+    onMouseLeave={()=>setHov(false)}
+    style={{
+      background:t.card,
+      borderRadius:28,
+      // Outer colored ring on hover + inner white border for iiSU "sticker" feel
+      border:`3px solid ${hov&&accent?`${accent}`:dark?"rgba(140,160,255,0.08)":"rgba(255,255,255,0.9)"}`,
+      boxShadow:hov
+        ?`0 20px 50px ${accent||C.blue}30, 0 4px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,${dark?0.04:0.6})`
+        :dark
+          ?"0 8px 32px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)"
+          :"0 8px 32px rgba(140,150,240,0.14), 0 2px 6px rgba(120,130,255,0.08), inset 0 1px 0 rgba(255,255,255,0.7)",
+      transition:"all 0.3s cubic-bezier(0.34,1.2,0.64,1)",
+      transform:hov&&onClick?"translateY(-5px)":"none",
+      cursor:onClick?"pointer":"default",
+      overflow:"hidden",
+      ...style
+    }}
+  >{children}</div>;
 }
 
 function Check({done,onClick,accent,size=26,disabled=false}){
@@ -1044,18 +1112,36 @@ function RoadmapPage({dark,isOwner,showToast,fireConfetti}) {
 
   return(
     <div>
-      <div className="noj-hero" style={{padding:"52px 20px 44px",maxWidth:900,margin:"0 auto",textAlign:"center",borderBottom:`2px solid ${t.border}`}}>
-        <div style={{display:"inline-flex",marginBottom:18,padding:"6px 20px",background:`${C.blue}12`,borderRadius:99,border:`1.5px solid ${C.blue}28`}}>
-          <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:3,color:C.blue,textTransform:"uppercase"}}>Personal Life Roadmap · The NOJ Path</span>
+      <div className="noj-hero" style={{padding:"60px 20px 48px",maxWidth:900,margin:"0 auto",textAlign:"center",borderBottom:`2px solid ${t.border}`,position:"relative"}}>
+        {/* Floating background decorations — iiSU style */}
+        <div style={{position:"absolute",top:30,left:"8%",fontSize:52,opacity:dark?0.08:0.14,animation:"floatDot 5s ease-in-out infinite",pointerEvents:"none"}}>🎮</div>
+        <div style={{position:"absolute",top:80,right:"10%",fontSize:44,opacity:dark?0.08:0.14,animation:"floatDot 6s ease-in-out infinite",animationDelay:"1s",pointerEvents:"none"}}>🗾</div>
+        <div style={{position:"absolute",bottom:40,left:"12%",fontSize:38,opacity:dark?0.08:0.14,animation:"floatDot 5.5s ease-in-out infinite",animationDelay:"2s",pointerEvents:"none"}}>⭐</div>
+        <div style={{position:"absolute",bottom:90,right:"8%",fontSize:42,opacity:dark?0.08:0.14,animation:"floatDot 7s ease-in-out infinite",animationDelay:"0.5s",pointerEvents:"none"}}>👑</div>
+
+        <div style={{display:"inline-flex",marginBottom:22,padding:"8px 22px",background:dark?`${C.blue}22`:"#fff",borderRadius:99,border:`2px solid ${dark?`${C.blue}44`:"rgba(255,255,255,0.9)"}`,boxShadow:dark?`0 4px 16px ${C.blue}22`:`0 4px 16px rgba(140,150,240,0.2)`,position:"relative",zIndex:1}}>
+          <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:3,color:C.blue,textTransform:"uppercase",fontWeight:700}}>✦ Personal Life Roadmap · The NOJ Path ✦</span>
         </div>
-        <h1 style={{fontFamily:"'Fredoka One',cursive",fontSize:"clamp(28px,6vw,64px)",lineHeight:1.1,marginBottom:16,color:dark?C.sky:C.blue}}>
+        <h1 style={{
+          fontFamily:"'Fredoka One',cursive",
+          fontSize:"clamp(32px,6.5vw,70px)",
+          lineHeight:1.05,
+          marginBottom:18,
+          background:`linear-gradient(135deg,${C.red} 0%,${C.purple} 40%,${C.blue} 75%,${C.sky} 100%)`,
+          WebkitBackgroundClip:"text",
+          WebkitTextFillColor:"transparent",
+          backgroundClip:"text",
+          filter:dark?`drop-shadow(0 4px 20px ${C.blue}44)`:`drop-shadow(0 4px 20px ${C.blue}33)`,
+          position:"relative",
+          zIndex:1
+        }}>
           First Foreign CEO<br/>of Nintendo of Japan
         </h1>
-        <p style={{fontFamily:"'Nunito',sans-serif",fontSize:15,color:t.sub,fontWeight:600,lineHeight:1.8,maxWidth:460,margin:"0 auto 24px"}}>
-          My roadmap to becoming the first foreign CEO of Nintendo.<br/>Inspired by Satoru Iwata. Built by sebastianosky.
+        <p style={{fontFamily:"'Nunito',sans-serif",fontSize:16,color:t.sub,fontWeight:700,lineHeight:1.8,maxWidth:480,margin:"0 auto 28px",position:"relative",zIndex:1}}>
+          My roadmap to becoming the first foreign CEO of Nintendo.<br/><span style={{color:C.red}}>Inspired by Satoru Iwata.</span> <span style={{color:C.blue}}>Built by sebastianosky.</span>
         </p>
         <BirthdayCounter dark={dark} isOwner={isOwner} showToast={showToast}/>
-        <div className="noj-stat-cards" style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:20}}>
+        <div className="noj-stat-cards" style={{display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap",marginBottom:22,position:"relative",zIndex:1}}>
           <StatCard value="7"   label="Phases" color={C.blue}   dark={dark}/>
           <StatCard value="~25" label="Years"  color={C.teal}   dark={dark}/>
           <StatCard value="1"   label="Goal"   color={C.yellow} dark={dark}/>
@@ -1261,8 +1347,8 @@ function ResourcesPage({dark,isOwner,showToast,fireConfetti}) {
         <div style={{display:"inline-flex",marginBottom:16,padding:"6px 20px",background:`${C.orange}14`,borderRadius:99,border:`1.5px solid ${C.orange}30`}}>
           <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:3,color:C.orange,textTransform:"uppercase"}}>Resource Library</span>
         </div>
-        <h2 style={{fontFamily:"'Fredoka One',cursive",fontSize:"clamp(24px,5vw,52px)",marginBottom:12,lineHeight:1.1,color:C.orange}}>My Reading Roadmap</h2>
-        <p style={{fontFamily:"'Nunito',sans-serif",fontSize:14,color:t.sub,fontWeight:600,lineHeight:1.7,maxWidth:420,margin:"0 auto 24px"}}>32 books across 6 phases. Every book has a specific reason.</p>
+        <h2 style={{fontFamily:"'Fredoka One',cursive",fontSize:"clamp(26px,5.5vw,56px)",marginBottom:14,lineHeight:1.05,background:`linear-gradient(135deg,${C.orange} 0%,${C.yellow} 50%,${C.red} 100%)`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",filter:`drop-shadow(0 4px 16px ${C.orange}33)`}}>My Reading Roadmap</h2>
+        <p style={{fontFamily:"'Nunito',sans-serif",fontSize:14,color:t.sub,fontWeight:600,lineHeight:1.7,maxWidth:420,margin:"0 auto 24px"}}>40 books across 6 phases. Every book has a specific reason.</p>
         <div className="noj-stat-cards" style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:20}}>
           <StatCard value={totalBooks} label="Books"    color={C.blue}   dark={dark}/>
           <StatCard value={6}          label="Phases"   color={C.teal}   dark={dark}/>
@@ -1317,6 +1403,7 @@ function ResourcesPage({dark,isOwner,showToast,fireConfetti}) {
                             <span style={{fontFamily:"'Fredoka One',cursive",fontSize:16,color:t.text,textDecoration:done?"line-through":"none"}}>{book.title}</span>
                             {book.isNew&&<NewBadge/>}
                             <TypeBadge type={book.type} dark={dark}/>
+                            {book.level&&<LevelBadge level={book.level} dark={dark}/>}
                           </div>
                           <div style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:t.mute,marginBottom:4,fontWeight:700}}>{book.sub}</div>
                           <div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,color:t.sub,lineHeight:1.6,fontWeight:600,fontStyle:"italic"}}>{book.note}</div>
@@ -1397,7 +1484,7 @@ function SideQuestsPage({dark,isOwner,showToast,fireConfetti}) {
         <div style={{display:"inline-flex",marginBottom:16,padding:"6px 20px",background:`${C.red}12`,borderRadius:99,border:`1.5px solid ${C.red}28`}}>
           <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:3,color:C.red,textTransform:"uppercase"}}>Side Quests</span>
         </div>
-        <h2 style={{fontFamily:"'Fredoka One',cursive",fontSize:"clamp(24px,5vw,52px)",marginBottom:12,lineHeight:1.1,color:C.red}}>Life Beyond the Main Story</h2>
+        <h2 style={{fontFamily:"'Fredoka One',cursive",fontSize:"clamp(26px,5.5vw,56px)",marginBottom:14,lineHeight:1.05,background:`linear-gradient(135deg,${C.red} 0%,${C.pink} 50%,${C.purple} 100%)`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",filter:`drop-shadow(0 4px 16px ${C.red}33)`}}>Life Beyond the Main Story</h2>
         <p style={{fontFamily:"'Nunito',sans-serif",fontSize:14,color:t.sub,fontWeight:600,lineHeight:1.7,maxWidth:420,margin:"0 auto 24px"}}>The goals that live between the phases. Not optional — just parallel.</p>
         <div className="noj-stat-cards" style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:20}}>
           <StatCard value={quests.length} label="Quests" color={C.red} dark={dark}/>
@@ -1527,11 +1614,12 @@ export default function App() {
   const fireConfetti=()=>{setConfetti(true);};
 
   return(
-    <div style={{fontFamily:"'Nunito',sans-serif",background:t.bg,minHeight:"100vh",color:t.text,position:"relative"}}>
+    <div style={{fontFamily:"'Nunito',sans-serif",background:t.bodyBg,minHeight:"100vh",color:t.text,position:"relative"}}>
       <style>{`
         ${FONTS}
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-        html,body{background:${t.bg};margin:0;padding:0;}
+        html,body{background:${dark?C.dBg:C.bg};margin:0;padding:0;}
+        body{background:${t.bodyBg};background-attachment:fixed;}
         @keyframes fadeSlide{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
         @keyframes floatDot{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
         @keyframes popIn{from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
