@@ -260,31 +260,34 @@ const BOOK_PHASES = [
     {num:26,title:"Shin Kanzen Master N2 Series",sub:"3A Corporation",type:"🇯🇵 Japanese",note:"THE best for serious test prep. Rigorous grammar, high-difficulty practice. All volumes — grammar, reading, listening, vocab.",level:"N2"},
     {num:27,title:"Nihongo So-Matome N2",sub:"ASK Publishing",type:"🇯🇵 Japanese",note:"6–8 week daily-schedule drill book. Good for time-limited review alongside Shin Kanzen.",level:"N2",isNew:true},
     {num:28,title:"TRY! Japanese N2",sub:"ASK Publishing",type:"🇯🇵 Japanese",note:"Integrates grammar through reading passages. More textbook-feel than pure drills — good for context.",level:"N2",isNew:true},
-    {num:29,title:"Japan's Software Factories",sub:"Michael Cusumano",type:"🇯🇵 Culture",note:"How Japanese tech companies build software differently."},
-    {num:30,title:"Made to Stick",sub:"Chip Heath & Dan Heath",type:"👑 Leadership",note:"Why some ideas survive and others die. Useful for pitching projects and Stanford applications.",isNew:true},
-    {num:31,title:"Talk Like TED",sub:"Carmine Gallo",type:"👑 Leadership",note:"Storytelling and public speaking. Pairs directly with the Give a Public Talk side quest.",isNew:true},
+    {num:29,title:"Japanese for Busy People I",sub:"AJALT",type:"🇯🇵 Japanese",note:"Survival-based approach used by business professionals. Great supplement alongside N2 prep.",level:"N5-N4",isNew:true},
+    {num:30,title:"Japanese for Busy People II",sub:"AJALT",type:"🇯🇵 Japanese",note:"Continues the practical business-Japanese track.",level:"N4-N3",isNew:true},
+    {num:31,title:"Japanese for Busy People III",sub:"AJALT",type:"🇯🇵 Japanese",note:"Bridges conversational Japanese toward professional registers.",level:"N3-N2",isNew:true},
+    {num:32,title:"Japan's Software Factories",sub:"Michael Cusumano",type:"🇯🇵 Culture",note:"How Japanese tech companies build software differently."},
+    {num:33,title:"Made to Stick",sub:"Chip Heath & Dan Heath",type:"👑 Leadership",note:"Why some ideas survive and others die. Useful for pitching projects and Stanford applications.",isNew:true},
+    {num:34,title:"Talk Like TED",sub:"Carmine Gallo",type:"👑 Leadership",note:"Storytelling and public speaking. Pairs directly with the Give a Public Talk side quest.",isNew:true},
   ]},
   {id:5,label:"PHASE 5",title:"STANFORD — PROGRAMMER + FOUNDER THINKING",age:"18–22",accent:C.red,focus:["Deep technical mastery","Founder-level thinking","Serious credibility"],books:[
-    {num:32,title:"The Lean Startup",sub:"Eric Ries",type:"👑 Leadership",note:"Build fast, test fast, don't guess. Directly applicable to Stanford projects and internships.",isNew:true},
-    {num:33,title:"Zero to One",sub:"Peter Thiel",type:"👑 Leadership",note:"CEO-level thinking — how to see what others miss. The Stanford mindset shift.",isNew:true},
-    {num:34,title:"Grokking Algorithms",sub:"Aditya Bhargava",type:"💻 Tech",note:"Visual, builds mental models for everything above it. Start here."},
-    {num:35,title:"Clean Code",sub:"Robert C. Martin",type:"💻 Tech",note:"Practical foundation. I'll feel every page after real messy code."},
-    {num:36,title:"Refactoring",sub:"Martin Fowler",type:"💻 Tech",note:"The Iwata skill — making broken systems better without breaking them."},
-    {num:37,title:"Design Patterns",sub:"Gang of Four",type:"💻 Tech",note:"Architecture thinking. Need Clean Code and Refactoring first."},
-    {num:38,title:"A Philosophy of Software Design",sub:"John Ousterhout",type:"💻 Tech",note:"Bridges everything into SICP."},
-    {num:39,title:"Structure and Interpretation of Computer Programs",sub:"Abelson & Sussman",type:"💻 Tech",note:"Last for a reason. SICP too early = brain shutdown. This is the summit."},
+    {num:35,title:"The Lean Startup",sub:"Eric Ries",type:"👑 Leadership",note:"Build fast, test fast, don't guess. Directly applicable to Stanford projects and internships.",isNew:true},
+    {num:36,title:"Zero to One",sub:"Peter Thiel",type:"👑 Leadership",note:"CEO-level thinking — how to see what others miss. The Stanford mindset shift.",isNew:true},
+    {num:37,title:"Grokking Algorithms",sub:"Aditya Bhargava",type:"💻 Tech",note:"Visual, builds mental models for everything above it. Start here."},
+    {num:38,title:"Clean Code",sub:"Robert C. Martin",type:"💻 Tech",note:"Practical foundation. I'll feel every page after real messy code."},
+    {num:39,title:"Refactoring",sub:"Martin Fowler",type:"💻 Tech",note:"The Iwata skill — making broken systems better without breaking them."},
+    {num:40,title:"Design Patterns",sub:"Gang of Four",type:"💻 Tech",note:"Architecture thinking. Need Clean Code and Refactoring first."},
+    {num:41,title:"A Philosophy of Software Design",sub:"John Ousterhout",type:"💻 Tech",note:"Bridges everything into SICP."},
+    {num:42,title:"Structure and Interpretation of Computer Programs",sub:"Abelson & Sussman",type:"💻 Tech",note:"Last for a reason. SICP too early = brain shutdown. This is the summit."},
   ]},
   {id:6,label:"PHASE 6",title:"EXECUTIVE LEVEL — N1 & BEYOND",age:"22+",accent:C.yellow,focus:["N1 mastery","Executive communication","Cultural mastery — deep"],books:[
-    {num:40,title:"Shin Kanzen Master N1 Series",sub:"3A Corporation",type:"🇯🇵 Japanese",note:"The summit of formal Japanese study. All volumes.",level:"N1"},
-    {num:41,title:"Nihongo 500 Mon N1",sub:"ASK Publishing",type:"🇯🇵 Japanese",note:"Daily drills — kanji, vocab, grammar in one book. Keep sharpness post-N1.",level:"N1",isNew:true},
-    {num:42,title:"A Dictionary of Advanced Japanese Grammar",sub:"Seiichi Makino",type:"🇯🇵 Japanese",note:"The final volume of the grammar dictionary series. Reference for life.",level:"Ref",isNew:true},
-    {num:43,title:"Business Japanese",sub:"Mitsubishi Corporation",type:"🇯🇵 Japanese",note:"Real corporate Japanese from people who live it."},
-    {num:44,title:"Keigo Training Workbook",sub:"Various",type:"🇯🇵 Japanese",note:"Honorific language is not optional in Japanese executive culture."},
-    {num:45,title:"The Culture Map",sub:"Erin Meyer",type:"🌏 Culture",note:"Essential for navigating Japan ↔ America."},
-    {num:46,title:"Never Split the Difference",sub:"Chris Voss",type:"👑 Leadership",note:"I will negotiate budgets, teams, and direction as an executive."},
-    {num:47,title:"The Ride of a Lifetime",sub:"Robert Iger",type:"👑 Leadership",note:"The closest real-world path to mine."},
-    {num:48,title:"An Introduction to Japanese Society",sub:"Yoshio Sugimoto",type:"🇯🇵 Culture",note:"Understanding the social structure I'm operating inside."},
-    {num:49,title:"Creativity, Inc.",sub:"Ed Catmull",type:"🎯 Core",note:"Pixar's creative leadership model — the closest Western equivalent to Nintendo's internal culture.",isNew:true},
+    {num:43,title:"Shin Kanzen Master N1 Series",sub:"3A Corporation",type:"🇯🇵 Japanese",note:"The summit of formal Japanese study. All volumes.",level:"N1"},
+    {num:44,title:"Nihongo 500 Mon N1",sub:"ASK Publishing",type:"🇯🇵 Japanese",note:"Daily drills — kanji, vocab, grammar in one book. Keep sharpness post-N1.",level:"N1",isNew:true},
+    {num:45,title:"A Dictionary of Advanced Japanese Grammar",sub:"Seiichi Makino",type:"🇯🇵 Japanese",note:"The final volume of the grammar dictionary series. Reference for life.",level:"Ref",isNew:true},
+    {num:46,title:"Business Japanese",sub:"Mitsubishi Corporation",type:"🇯🇵 Japanese",note:"Real corporate Japanese from people who live it."},
+    {num:47,title:"Keigo Training Workbook",sub:"Various",type:"🇯🇵 Japanese",note:"Honorific language is not optional in Japanese executive culture."},
+    {num:48,title:"The Culture Map",sub:"Erin Meyer",type:"🌏 Culture",note:"Essential for navigating Japan ↔ America."},
+    {num:49,title:"Never Split the Difference",sub:"Chris Voss",type:"👑 Leadership",note:"I will negotiate budgets, teams, and direction as an executive."},
+    {num:50,title:"The Ride of a Lifetime",sub:"Robert Iger",type:"👑 Leadership",note:"The closest real-world path to mine."},
+    {num:51,title:"An Introduction to Japanese Society",sub:"Yoshio Sugimoto",type:"🇯🇵 Culture",note:"Understanding the social structure I'm operating inside."},
+    {num:52,title:"Creativity, Inc.",sub:"Ed Catmull",type:"🎯 Core",note:"Pixar's creative leadership model — the closest Western equivalent to Nintendo's internal culture.",isNew:true},
   ]},
 ];
 
@@ -1321,25 +1324,89 @@ function ResourcesPage({dark,isOwner,showToast,fireConfetti}) {
   const t=T(dark);
   const [openPhase,setOpenPhase]=useState(null);
   const [filter,setFilter]=useState("All");
+  const [search,setSearch]=useState("");
+  const [searchFocused,setSearchFocused]=useState(false);
+  const searchRef=useRef(null);
   const {state:read,save:saveRead,updatedAt,syncing} = useLiveState("book_reads",{},isOwner);
+  const {state:reading,save:saveReading} = useLiveState("currently_reading",{},isOwner);
+
+  // Keyboard shortcuts
+  useEffect(()=>{
+    const handler=(e)=>{
+      if(e.key==="/"&&document.activeElement?.tagName!=="INPUT"&&document.activeElement?.tagName!=="TEXTAREA"){
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+      if(e.key==="Escape"&&document.activeElement===searchRef.current){
+        setSearch("");
+        searchRef.current?.blur();
+      }
+    };
+    window.addEventListener("keydown",handler);
+    return()=>window.removeEventListener("keydown",handler);
+  },[]);
 
   const toggleRead=(num,e,phase)=>{
     e.stopPropagation();if(!isOwner)return;
     const next={...read,[num]:!read[num]};
     saveRead(next,"Book marked as read");
     showToast(next[num]?"Marked as read ✓":"Unmarked","success");
-    // Confetti if entire phase is now read
+    // Auto-remove from currently reading if marked as done
+    if(next[num]&&reading[num]){
+      const nextReading={...reading};delete nextReading[num];
+      saveReading(nextReading);
+    }
     if(phase){
       const allRead=phase.books.every(b=>b.num===num?next[num]:next[b.num]);
       if(allRead)fireConfetti();
     }
   };
 
+  const toggleReading=(num,e)=>{
+    e.stopPropagation();if(!isOwner)return;
+    const currentlyReadingCount=Object.values(reading).filter(Boolean).length;
+    if(!reading[num]&&currentlyReadingCount>=3){
+      showToast("Max 3 books at once — finish one first","info");
+      return;
+    }
+    const next={...reading,[num]:!reading[num]};
+    if(!next[num])delete next[num];
+    saveReading(next);
+    showToast(next[num]?"Started reading ⭐":"Removed from reading","success");
+  };
+
   const allTypes=["All","🎯 Core","🧠 Mindset","🇯🇵 Japanese","🇯🇵 Culture","💻 Tech","🎮 Design","👑 Leadership"];
   const totalBooks=BOOK_PHASES.reduce((s,p)=>s+p.books.length,0);
   const newBooks=BOOK_PHASES.reduce((s,p)=>s+p.books.filter(b=>b.isNew).length,0);
   const readCount=Object.values(read).filter(Boolean).length;
-  const filtered=BOOK_PHASES.map(p=>({...p,books:filter==="All"?p.books:p.books.filter(b=>b.type===filter||(filter==="🇯🇵 Culture"&&b.type==="🌏 Culture"))})).filter(p=>p.books.length>0);
+  const readingCount=Object.values(reading).filter(Boolean).length;
+
+  // Per-type counts for filter pills
+  const typeCounts={};
+  BOOK_PHASES.forEach(p=>p.books.forEach(b=>{
+    const key=b.type==="🌏 Culture"?"🇯🇵 Culture":b.type;
+    typeCounts[key]=(typeCounts[key]||0)+1;
+  }));
+  typeCounts["All"]=totalBooks;
+
+  const matchesSearch=(book)=>{
+    if(!search.trim())return true;
+    const q=search.toLowerCase();
+    return book.title.toLowerCase().includes(q)||book.sub.toLowerCase().includes(q)||book.note.toLowerCase().includes(q);
+  };
+
+  const filtered=BOOK_PHASES.map(p=>({
+    ...p,
+    books:p.books
+      .filter(b=>filter==="All"||b.type===filter||(filter==="🇯🇵 Culture"&&b.type==="🌏 Culture"))
+      .filter(matchesSearch)
+      // Sort: currently reading first, then unread, then read
+      .sort((a,b)=>{
+        const aR=reading[a.num]?0:read[a.num]?2:1;
+        const bR=reading[b.num]?0:read[b.num]?2:1;
+        return aR-bR;
+      })
+  })).filter(p=>p.books.length>0);
 
   return(
     <div>
@@ -1348,11 +1415,11 @@ function ResourcesPage({dark,isOwner,showToast,fireConfetti}) {
           <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:3,color:C.orange,textTransform:"uppercase"}}>Resource Library</span>
         </div>
         <h2 style={{fontFamily:"'Fredoka One',cursive",fontSize:"clamp(26px,5.5vw,56px)",marginBottom:14,lineHeight:1.05,background:`linear-gradient(135deg,${C.orange} 0%,${C.yellow} 50%,${C.red} 100%)`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",filter:`drop-shadow(0 4px 16px ${C.orange}33)`}}>My Reading Roadmap</h2>
-        <p style={{fontFamily:"'Nunito',sans-serif",fontSize:14,color:t.sub,fontWeight:600,lineHeight:1.7,maxWidth:420,margin:"0 auto 24px"}}>40 books across 6 phases. Every book has a specific reason.</p>
+        <p style={{fontFamily:"'Nunito',sans-serif",fontSize:14,color:t.sub,fontWeight:600,lineHeight:1.7,maxWidth:420,margin:"0 auto 24px"}}>{totalBooks} books across 6 phases. Every book has a specific reason.</p>
         <div className="noj-stat-cards" style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:20}}>
           <StatCard value={totalBooks} label="Books"    color={C.blue}   dark={dark}/>
           <StatCard value={6}          label="Phases"   color={C.teal}   dark={dark}/>
-          <StatCard value={newBooks}   label="New Adds" color={C.yellow} dark={dark}/>
+          {readingCount>0&&<StatCard value={readingCount} label="Reading Now" color={C.purple} dark={dark}/>}
           <StatCard value={`${readCount}/${totalBooks}`} label="Read" color={C.green} dark={dark}/>
         </div>
         <ProgressBar value={readCount} total={totalBooks} color={C.orange}/>
@@ -1363,8 +1430,49 @@ function ResourcesPage({dark,isOwner,showToast,fireConfetti}) {
         </div>
       </div>
 
-      <div style={{maxWidth:900,margin:"0 auto",padding:"20px 20px 8px",display:"flex",flexWrap:"wrap",gap:7}}>
-        {allTypes.map(type=><Pill key={type} label={type} active={filter===type} color={C.blue} onClick={()=>{setFilter(type);setOpenPhase(null);}} dark={dark}/>)}
+      {/* Search bar */}
+      <div style={{maxWidth:900,margin:"0 auto",padding:"20px 20px 0"}}>
+        <div style={{position:"relative",maxWidth:500,margin:"0 auto"}}>
+          <div style={{position:"absolute",left:18,top:"50%",transform:"translateY(-50%)",fontSize:18,pointerEvents:"none",opacity:0.5}}>🔍</div>
+          <input
+            ref={searchRef}
+            type="text"
+            placeholder="Search books by title, author, or note..."
+            value={search}
+            onChange={e=>setSearch(e.target.value)}
+            onFocus={()=>setSearchFocused(true)}
+            onBlur={()=>setSearchFocused(false)}
+            style={{
+              width:"100%",
+              padding:"13px 48px 13px 48px",
+              borderRadius:99,
+              border:`2.5px solid ${searchFocused?C.orange:t.border}`,
+              background:t.card,
+              color:t.text,
+              fontFamily:"'Nunito',sans-serif",
+              fontSize:14,
+              fontWeight:600,
+              outline:"none",
+              transition:"all 0.2s",
+              boxShadow:searchFocused?`0 8px 24px ${C.orange}22`:t.shadowS
+            }}
+          />
+          {!searchFocused&&!search&&(
+            <div style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",padding:"3px 8px",borderRadius:6,background:t.soft,fontFamily:"'JetBrains Mono',monospace",fontSize:10,fontWeight:700,color:t.mute,pointerEvents:"none"}}>/</div>
+          )}
+          {search&&(
+            <button onClick={()=>{setSearch("");searchRef.current?.focus();}} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",background:t.soft,border:"none",borderRadius:"50%",width:26,height:26,cursor:"pointer",color:t.sub,fontSize:14,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
+          )}
+        </div>
+      </div>
+
+      <div style={{maxWidth:900,margin:"0 auto",padding:"14px 20px 8px",display:"flex",flexWrap:"wrap",gap:7,justifyContent:"center"}}>
+        {allTypes.map(type=>{
+          const count=typeCounts[type]||0;
+          return(
+            <Pill key={type} label={`${type} ${count>0?`· ${count}`:""}`} active={filter===type} color={C.blue} onClick={()=>{setFilter(type);setOpenPhase(null);}} dark={dark}/>
+          );
+        })}
       </div>
 
       <div style={{maxWidth:900,margin:"12px auto 0",padding:"0 20px 64px"}}>
@@ -1394,13 +1502,27 @@ function ResourcesPage({dark,isOwner,showToast,fireConfetti}) {
                   <div style={{padding:"10px 0 4px"}}><ProgressBar value={phaseRead} total={phase.books.length} color={phase.accent}/></div>
                   {phase.books.map((book,i)=>{
                     const done=!!read[book.num];
+                    const isReading=!!reading[book.num];
                     return(
-                      <div key={book.num} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"14px 0",borderBottom:i<phase.books.length-1?`1.5px solid ${t.border}`:"none",opacity:done?0.5:1,transition:"opacity 0.2s"}}>
+                      <div key={book.num} style={{
+                        display:"flex",
+                        gap:12,
+                        alignItems:"flex-start",
+                        padding:"14px 12px",
+                        margin:"2px -12px",
+                        borderBottom:i<phase.books.length-1?`1.5px solid ${t.border}`:"none",
+                        opacity:done?0.5:1,
+                        transition:"all 0.2s",
+                        background:isReading?`linear-gradient(90deg,${C.purple}18,transparent)`:"transparent",
+                        borderLeft:isReading?`4px solid ${C.purple}`:"4px solid transparent",
+                        borderRadius:isReading?12:0
+                      }}>
                         <Check done={done} accent={phase.accent} disabled={!isOwner} onClick={e=>toggleRead(book.num,e,phase)}/>
                         <div style={{fontFamily:"'Fredoka One',cursive",fontSize:13,color:phase.accent,minWidth:30,padding:"3px 7px",borderRadius:9,textAlign:"center",background:dark?`${phase.accent}16`:`${phase.accent}10`,border:`2px solid ${phase.accent}44`,flexShrink:0}}>{String(book.num).padStart(2,"0")}</div>
-                        <div style={{flex:1}}>
+                        <div style={{flex:1,minWidth:0}}>
                           <div style={{display:"flex",alignItems:"center",flexWrap:"wrap",gap:7,marginBottom:4}}>
                             <span style={{fontFamily:"'Fredoka One',cursive",fontSize:16,color:t.text,textDecoration:done?"line-through":"none"}}>{book.title}</span>
+                            {isReading&&<span style={{fontFamily:"'Nunito',sans-serif",fontSize:9,fontWeight:900,padding:"2px 9px",borderRadius:99,background:`linear-gradient(135deg,${C.purple},${C.pink})`,color:"#fff",boxShadow:`0 2px 6px ${C.purple}55`}}>📖 READING</span>}
                             {book.isNew&&<NewBadge/>}
                             <TypeBadge type={book.type} dark={dark}/>
                             {book.level&&<LevelBadge level={book.level} dark={dark}/>}
@@ -1408,6 +1530,27 @@ function ResourcesPage({dark,isOwner,showToast,fireConfetti}) {
                           <div style={{fontFamily:"'Nunito',sans-serif",fontSize:11,color:t.mute,marginBottom:4,fontWeight:700}}>{book.sub}</div>
                           <div style={{fontFamily:"'Nunito',sans-serif",fontSize:12,color:t.sub,lineHeight:1.6,fontWeight:600,fontStyle:"italic"}}>{book.note}</div>
                         </div>
+                        {isOwner&&!done&&(
+                          <button
+                            onClick={e=>toggleReading(book.num,e)}
+                            title={isReading?"Stop reading":"Mark as currently reading"}
+                            style={{
+                              background:isReading?`linear-gradient(135deg,${C.purple},${C.pink})`:"transparent",
+                              border:`2px solid ${isReading?C.purple:t.border}`,
+                              borderRadius:"50%",
+                              width:32,
+                              height:32,
+                              cursor:"pointer",
+                              display:"flex",
+                              alignItems:"center",
+                              justifyContent:"center",
+                              fontSize:14,
+                              flexShrink:0,
+                              transition:"all 0.2s",
+                              boxShadow:isReading?`0 2px 10px ${C.purple}55`:"none"
+                            }}
+                          >{isReading?"⭐":"☆"}</button>
+                        )}
                       </div>
                     );
                   })}
